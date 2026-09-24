@@ -27,18 +27,20 @@ export default function PhotographyPage() {
           <h1>Photography</h1>
 
           <p>
-            Landscapes, wildlife, expeditions, and quiet moments from the field.
+            A few favourite views and moments from my travels.
           </p>
         </div>
       </section>
 
-      {/* INTRO */}
-      <section className="photo-intro">
-        <p>
-          A collection of images from travel, climbing, trekking, wildlife
-          expeditions, and everyday moments that felt worth preserving.
-        </p>
-      </section>
+     {/* INTRO */}
+    <section className="photo-intro">
+      <p>
+        I love to travel, and I’m always trying to capture a little of the
+        beauty of the places I get to visit. These photos are some of my
+        favourite memories from hiking, enjoying nature and
+        exploring somewhere new.
+      </p>
+    </section>
 
       {/* GRID */}
       <section className="photo-grid">

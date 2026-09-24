@@ -11,7 +11,7 @@ export default function Footer() {
         <div className="footer-brand">
           <h3 className="footer-title">Josh Visser</h3>
           <p className="footer-tagline">
-            A portfolio of work, ideas, and experiments in engineering and life.
+            A portfolio of work, ideas, and experiments.
           </p>
         </div>
 
