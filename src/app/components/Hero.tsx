@@ -158,7 +158,7 @@ export default function Hero() {
               </a>
 
               <a
-                href="/Resume_JoshVisser.pdf"
+                href="/Portfolio-Website/Resume_JoshVisser.pdf"
                 download="Resume_JoshVisser.pdf"
                 style={{
                   display: 'inline-block',

@@ -181,18 +181,7 @@ export const photos = [
     blurb:
       "Captured on Mount Kilimanjaro under a clear high-altitude sky. With almost no surrounding light pollution, the stars felt unusually sharp and close.",
   },
-  {
-    slug: "night-walk",
-    src: `${base}/street.jpeg`,
-    title: "Night Walk",
-    location: "Venice",
-    year: "2025",
-    category: "Urban",
-    width: 1261,
-    height: 1834,
-    blurb:
-      "A quiet side street in Venice late at night. I wanted the image to feel cinematic and still, with the city reduced to light, shadow, and texture.",
-  },
+  
   {
     slug: "after-surf",
     src: `${base}/surfboards.jpeg`,
@@ -264,5 +253,17 @@ export const photos = [
     height: 5457,
     blurb:
       "An early morning street scene in Japan before the city fully woke up. The vertical framing helped emphasize the density and scale of the architecture.",
+  },
+  {
+    slug: "night-walk",
+    src: `${base}/street.jpeg`,
+    title: "Night Walk",
+    location: "Venice",
+    year: "2025",
+    category: "Urban",
+    width: 1261,
+    height: 1834,
+    blurb:
+      "A quiet side street in Venice late at night. I wanted the image to feel cinematic and still, with the city reduced to light, shadow, and texture.",
   },
 ];
