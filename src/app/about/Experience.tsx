@@ -235,10 +235,10 @@ const items = useMemo<TimelineItem[]>(
       ) : (
         <div className="exp-resume">
           <div className="exp-resume-embed">
-            <object data="/Resume_JoshVisser.pdf" type="application/pdf" width="100%" height="100%">
+            <object data="/Portfolio-Website/Resume_JoshVisser.pdf" type="application/pdf" width="100%" height="100%">
               <div className="exp-resume-fallback">
                 <p>Your browser can’t display PDFs inline.</p>
-                <a className="exp-download" href="/Resume_JoshVisser.pdf" target="_blank" rel="noreferrer">
+                <a className="exp-download" href="/Portfolio-Website/Resume_JoshVisser.pdf" target="_blank" rel="noreferrer">
                   Download resume
                 </a>
               </div>
