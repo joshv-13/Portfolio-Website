@@ -101,7 +101,7 @@ export default function Contact() {
           </div>
         </section>
 
-        {/* RIGHT COLUMN — FORM */}
+        {/* RIGHT COLUMN — FORM (disabled)
         <section className="contact-right" aria-labelledby="contact-form-title">
           <div className="contact-form-shell">
             <div className="contact-form-header">
@@ -173,6 +173,7 @@ export default function Contact() {
             )}
           </div>
         </section>
+        */}
       </div>
     </main>
   )
