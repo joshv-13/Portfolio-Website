@@ -1,0 +1,155 @@
+---
+title: "MediAlly — Smart Pillbox & Medication Assistant"
+date: "2025-04-04"
+excerpt: AI-assisted medication management prototype for long-term care, combining secure dispensing, verification, and traceability to reduce medication errors and staff workload.
+image: "/images/projects/medially/hero.png"
+tech: [Python, Computer Vision, LLMs, ROS2, Firebase, Raspberry Pi, BeagleBone AI, Embedded Systems, Human-Centered Design]
+---
+
+## Overview
+
+Medication errors are a major risk in long-term care (LTC) homes—especially under staffing shortages and high workload. For our Engineering Design IV capstone, our team built **MediAlly**, a prototype **smart pillbox + medication assistant** intended to reduce mismanagement through three core ideas:
+
+- **Verification** (confirm the right person is receiving medication + confirm intake)
+- **Traceability** (log events and surface them to staff)
+- **Personalization** (answer medication questions and provide guidance in plain language)
+
+
+## What I Personally Worked On
+
+This was a team project, but my work was mainly on the **software + AI verification** side and the “make it actually function” glue:
+
+- Prototyping **computer-vision verification** (identity + intake-related detection)
+- Helping integrate the **AI pipeline** conceptually (voice → intent → retrieval/response)
+- Building/testing system logic that supports **traceability** and staff visibility
+- General system integration + debugging across modules
+
+
+---
+
+## The Problem We Targeted
+
+In LTC environments, medication management is vulnerable to:
+
+- Documentation gaps or inconsistent digital systems
+- High cognitive load on staff
+- Late or missed administration (especially during staffing issues)
+- Limited patient-friendly guidance
+
+Our goal was to design a tool that supports staff rather than replacing them, while improving reliability and logging.
+
+---
+
+## System Concept
+
+At a high level, the prototype combines:
+
+1. **Dispensing system** (locked compartments, scheduled access)
+2. **Computer vision verification** (confirm correct user; detect intake-related activity)
+3. **Staff-facing database + UI** (patient/med records + logs)
+4. **Voice-based assistant** (answers questions and routes emergencies)
+
+### Device Rendering (Prototype Concept)
+
+![](/images/projects/medially/device-render.png)
+
+
+
+---
+
+## Architecture and Modules
+
+### Mechanical + Electronics (System Layout)
+
+![](/images/projects/medially/exploded-view.png)
+
+![](/images/projects/medially/wiring-diagram.png)
+
+
+**Key prototype components:**
+- Raspberry Pi (system control + LLM features + actuation control)
+- BeagleBone AI (computer vision workload)
+- Servo driver + servo actuation for compartment access
+- Camera mounted above compartments for verification
+- Speaker / audio output
+
+---
+
+## Traceability and Staff UI (Firebase)
+
+A major design requirement was giving staff **visibility** into:
+- patient records
+- medication schedules
+- logs of interactions + events
+
+![](/images/projects/medially/firebase-backend.png)
+
+
+![](/images/projects/medially/firebase-frontend.png)
+
+
+---
+
+## Computer Vision Verification
+
+The prototype uses two verification ideas:
+
+### 1) Identity verification (face recognition)
+Before dispensing, the system verifies the correct user is present. In report testing, this achieved **0 false positives** (no unauthorized access events) with **one false negative** in a 10-trial test, for **~90% accuracy** overall.
+
+### 2) Intake verification (activity-based detection)
+To reduce the “pill removed but not taken” failure mode, the system includes a **movement-pattern approach** using pose landmarks over time and an LSTM classifier.
+
+![](/images/projects/medially/pose-and-face.png)
+
+
+![](/images/projects/medially/lstm-architecture.png)
+
+---
+
+## LLM Reasoning Module (Medication Assistant)
+
+The assistant concept supports:
+- medication questions (grounded in a knowledge section)
+- patient history queries (grounded in patient records)
+- emergency queries (trigger alerts + predefined response)
+- out-of-domain queries (safe fallback)
+
+The report’s architecture includes:
+- Speech-to-text → intent classification → retrieval (vector search) → LLM response → text-to-speech
+- A lightweight deployment strategy that can run on constrained hardware by offloading heavier inference where needed
+
+---
+
+
+## Results Snapshot
+
+- **Facial verification:** strong security performance (no unauthorized acceptances), ~90% overall in the small test set  
+- **Intake-related activity classifier:** reported ~80% accuracy, with visible misclassifications in the confusion matrix  
+- **LLM pipeline nodes (reported testing):** strong accuracy across speech-to-text, intent routing, retrieval/classification, and TTS in controlled tests
+
+![](/images/projects/medially/pill-confusion-matrix.png)
+
+---
+
+## Cost and Practicality
+
+The prototype bill of materials in the report totaled **~$521 CAD**, with a scaled estimate per unit significantly lower under bulk purchasing. The point of the prototype wasn’t perfect cost optimization—it was proving:
+
+- the system concept is buildable
+- verification + logging are feasible
+- staff-facing traceability can be integrated early
+
+---
+
+## Key Learnings
+
+- Verification is only useful if it’s **operationally reliable** (false negatives matter as much as false positives in care settings)
+- Building “AI features” is easy; building **a system staff can trust** requires logging, failure modes, and usability
+- Modular system design matters—separating perception, reasoning, actuation, and UI made debugging possible
+
+---
+
+## Outcome
+
+MediAlly is a capstone prototype that demonstrates how AI + verification + traceability can be combined into a practical support tool for LTC medication workflows. For me, it was a strong systems project: **computer vision, embedded constraints, system integration, and user-facing accountability all at once**.

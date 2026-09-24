@@ -1,0 +1,200 @@
+/* ===========================
+   SECTION WRAPPER
+   =========================== */
+
+.interviews-section {
+  padding: 1rem 0 1rem; /* less top space before "Start here." */
+  background-color: #f5f5f7;
+}
+
+/* ===========================
+   HEADER
+   =========================== */
+
+.interviews-header {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.4rem;
+  margin-bottom: 2.75rem;
+}
+
+.interviews-eyebrow {
+  font-weight: 900;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #2563eb;
+  font-size: 1.05rem; /* ⬅️ bigger */
+}
+
+.interviews-title {
+  font-family: "Merriweather", serif;
+  font-size: clamp(2.4rem, 3.2vw, 3.2rem);
+  font-weight: 900;
+  margin: 0;
+  color: #041021;
+}
+/* ===========================
+   SWIPER WRAPPER
+   =========================== */
+
+.interviews-swiper {
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+}
+
+/* Ensure all slides/cards can match height */
+.interviews-swiper .swiper-slide {
+  height: auto;
+  display: flex;
+}
+
+.interviews-swiper .swiper-slide > a {
+  height: 100%;
+}
+
+/* Position Swiper nav arrows to top-right */
+.interviews-section .swiper-button-prev,
+.interviews-section .swiper-button-next {
+  width: 40px;
+  height: 40px;
+  border-radius: 9999px;
+  background: #ffffff;
+  box-shadow: 0 10px 25px rgba(15, 23, 42, 0.15);
+  top: -3.2rem;
+  transform: none;
+  color: #0f172a;
+}
+
+.interviews-section .swiper-button-prev::after,
+.interviews-section .swiper-button-next::after {
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+.interviews-section .swiper-button-next {
+  right: 0;
+}
+
+.interviews-section .swiper-button-prev {
+  right: 3.1rem;
+}
+
+/* ===========================
+   CARD STYLING
+   =========================== */
+
+.interview-card {
+  display: block;
+  text-decoration: none;
+  background: #ffffff;
+  border-radius: 18px;
+  border: 1px solid rgba(148, 163, 184, 0.18);
+  box-shadow: 0 20px 40px rgba(15, 23, 42, 0.08);
+  overflow: hidden;
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
+}
+
+.interview-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 30px 60px rgba(15, 23, 42, 0.18);
+}
+
+.interview-card-body {
+  padding: 1.6rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+}
+
+/* Image */
+.interview-card-image-wrapper {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  background: rgba(2, 8, 23, 0.04);
+}
+
+.interview-card-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+
+.interview-card-title {
+  margin: 0;
+  font-size: 1.35rem;
+  font-weight: 800;
+  color: #041021;
+  line-height: 1.15;
+
+  /* keeps cards visually consistent if one title is shorter */
+  min-height: 3.2em; /* ~2 lines */
+}
+
+.interview-card-meta {
+  margin: 0;
+  font-size: 0.93rem;
+  line-height: 1.6;
+  color: #4b5563;
+
+  /* keeps meta blocks consistent */
+  min-height: 3.2em; /* ~2 lines */
+}
+
+/* ===========================
+   SEE ALL BUTTON
+   =========================== */
+
+.interviews-see-all-wrapper {
+  margin-top: 2.5rem;
+  display: flex;
+  justify-content: center;
+}
+
+.interviews-see-all-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  background: #ffffff;
+  color: #0f172a;
+  border-radius: 9999px;
+  border: 1px solid rgba(148, 163, 184, 0.7);
+  padding: 0.7rem 1.9rem;
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  box-shadow: 0 12px 30px rgba(15, 23, 42, 0.12);
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.interviews-see-all-btn:hover {
+  background: #0f7cf2;
+  color: #ffffff;
+  border-color: #0f7cf2;
+  text-decoration: none;
+}
+
+/* ===========================
+   RESPONSIVE
+   =========================== */
+
+@media (max-width: 768px) {
+  .interviews-section {
+    padding: 3.5rem 0 5rem;
+  }
+
+  .interviews-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.6rem;
+  }
+
+  .interviews-title {
+    font-size: clamp(2rem, 6vw, 2.6rem);
+  }
+}

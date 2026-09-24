@@ -1,0 +1,152 @@
+---
+title: "GlideGuard: Needle Tip Sheath to Prevent Needlestick Injuries"
+date: "2024-12-02"
+excerpt: "A spring-loaded, auto-sheathing needle tip that locks after injection to reduce needlestick injuries while staying compatible with standard Luer-lock syringes."
+image: "/images/projects/glideguard/hero.png"
+tech: [Medical Device Design, Mechanical Design, DFM, ISO Standards, Safety Engineering, CAD]
+---
+
+## Overview
+
+Needlestick injuries are a persistent safety risk for healthcare workers, especially during recapping and disposal. **GlideGuard** is a needle-tip attachment that **automatically covers the needle after use** using a spring-driven sliding sheath and latch mechanism—reducing exposure without requiring a workflow change or a full retractable syringe.
+
+The key design choice was to **use a sliding sheath instead of retracting the needle into the syringe barrel**, preserving compatibility with standard syringes and reducing inventory complexity.
+
+---
+
+## Problem
+
+Healthcare workers administer injections at massive scale, and even low-probability errors become frequent events. Most injuries occur during **handling after injection**—particularly recapping and disposal—when fatigue and time pressure are highest.
+
+Existing solutions often trade safety for cost or usability:
+- Full retractable syringes are effective, but increase inventory burden and reduce interchangeability.
+- Some retractable needle tips require hand placement near the needle or introduce awkward activation steps.
+
+GlideGuard was designed to prioritize:
+- **Safety (minimize needle exposure)**
+- **Ease of implementation (minimal workflow change)**
+- **Manufacturing simplicity and cost competitiveness**
+
+---
+
+## Solution Summary
+
+GlideGuard is a **spring-loaded sheath** that:
+- Ships with the needle covered (safe out of the package)
+- Latches in a retracted position for injection
+- Releases automatically after injection to re-cover the needle
+
+### What makes it different
+- Keeps the needle + syringe **interchangeable** via **standard Luer lock**
+- Uses **mechanical auto-actuation** during the injection/removal motion
+- Minimizes moving parts while maintaining robust locking
+
+---
+
+## How It Works
+
+![Three-Stage Use Diagram](/images/projects/glideguard/three-stage.png)
+
+### 1) Initial State (Shipped Safe)
+The sheath starts **covering the needle tip**, preventing accidental sticks pre-use.
+
+### 2) Injection State (Latched Open)
+The healthcare worker pulls the sheath back to expose the needle and **engage the latch**.
+
+### 3) Release State (Auto-Sheathed)
+During injection, the sheath compresses against the skin and disengages the latch.
+When the needle is withdrawn, the spring drives the sheath forward, **covering the needle tip immediately**.
+
+---
+
+## Mechanical Architecture
+
+![Exploded View](/images/projects/glideguard/exploded.png)
+
+GlideGuard was designed to be simple and scalable:
+
+- **Needle hub**
+  - Interfaces with standard syringes through Luer lock
+  - Includes latch geometry for sheath engagement
+- **Sheath**
+  - Transparent polymer body (maintains visibility of syringe markings)
+  - Interior tabs interface with hub latch
+  - Rounded/concave end geometry to avoid pinch points
+- **Compression spring**
+  - Drives forward motion after latch release
+- **Needle tubing**
+  - Purchased in bulk and cut to length as required
+
+---
+
+## Latch Mechanism
+
+![Latch Mechanism Steps](/images/projects/glideguard/latch-steps.png)
+
+The latch uses a repeatable axial-load interaction (conceptually similar to a pen-style latch), designed to:
+- Hold the sheath retracted during injection
+- Release reliably when conditions are met
+- Avoid uneven loading via a mirrored latch feature
+
+Primary design goals:
+- **Minimize failure points**
+- **Reduce risk of pinch points**
+- **Prevent accidental post-use exposure**
+
+---
+
+## Design Constraints and Standards
+
+The design was developed with medical device constraints in mind, including:
+- Compatibility with standard needle gauges and syringe systems
+- Sterile, tamper-proof packaging and bulk distribution requirements
+- Sharps-injury prevention expectations and usability constraints
+- Manufacturability at high volume (injection molding + simple assembly)
+
+---
+
+## Engineering Validation
+
+To support feasibility, the project included quantitative checks such as:
+- Spring force selection (enough to overcome friction and reliably sheath)
+- Energy stored in spring compression during use
+- Stress estimates to ensure components remain within safe mechanical limits
+
+These calculations informed:
+- Material choice for the sheath and hub
+- Spring constant targets
+- Geometry decisions for tab + latch reliability
+
+---
+
+## Economics and Scalability
+
+A core goal was to remain cost-competitive while improving safety.
+
+GlideGuard was designed to:
+- Be manufacturable using injection molding
+- Require few components
+- Avoid replacing the entire syringe system (unlike full retractable syringes)
+
+The analysis indicated that even modest reductions in needlestick incidence could create meaningful net savings at healthcare-system scale, while keeping per-unit cost competitive at volume.
+
+---
+
+## Risks and Next Steps
+
+Key uncertainties identified for future development:
+- Extensive reliability testing across environmental conditions (humidity, tolerance stacking)
+- Long-run latch durability and tab stress concentration testing
+- User trials to confirm it integrates seamlessly with real workflows
+- Validation under regulatory testing conditions
+
+---
+
+## What I Did
+
+- Contributed to the engineering design process from problem definition to final concept selection
+- Supported mechanical design decisions and manufacturability thinking
+- Helped develop the final mechanism narrative, workflow integration, and technical justification
+
+
+

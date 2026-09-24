@@ -1,0 +1,393 @@
+/* ===========================
+   HERO ROOT + BACKGROUND
+   =========================== */
+
+.hero {
+  position: relative;
+  height: 110vh;
+  min-height: 700px;
+  overflow: hidden;
+  background-color: #000000;
+  color: #ffffff;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text",
+    "Segoe UI", sans-serif;
+}
+
+.hero-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+.hero-bg img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Content sits above background */
+.hero-content {
+  position: relative;
+  z-index: 10;
+  width: 100%;
+  height: 100%;
+}
+
+/* ===========================
+   HERO NAVBAR (clean + natural)
+   =========================== */
+
+.hero-navbar {
+  position: relative;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+
+  /* less bulky + more modern */
+  padding: 2rem 10vw;
+
+  background: transparent;
+  backdrop-filter: none;
+
+  /* set global sizing here so everything inherits */
+  font-size: clamp(1.2rem, 1.3vw, 1.35rem);
+  line-height: 1;
+}
+
+/* Columns: let left/right size to content, center flexes */
+.hero-navbar-left,
+.hero-navbar-center,
+.hero-navbar-right {
+  display: flex;
+  align-items: center;
+}
+
+.hero-navbar-left {
+  flex: 0 0 auto;
+  justify-content: flex-start;
+}
+
+.hero-navbar-center {
+  flex: 1;
+  justify-content: center;
+
+  /* responsive gap */
+  gap: clamp(1.6rem, 3vw, 3.2rem);
+
+  /* remove baseline weirdness */
+  margin-top: 0;
+}
+
+.hero-navbar-right {
+  flex: 0 0 auto;
+  justify-content: flex-end;
+  gap: 1.25rem;
+}
+
+/* Name / logo */
+.hero-name {
+  color: #ffffff;
+  font-weight: 800;
+
+  /* less extreme spacing */
+  letter-spacing: 0.18em;
+
+  text-transform: uppercase;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.35);
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.hero-name:hover {
+  opacity: 0.8;
+  color: #7dd3fc;
+  text-decoration: none;
+}
+
+/* Nav links */
+.nav-link,
+.hero-nav-link-button {
+  color: #ffffff;
+  text-decoration: none;
+
+  /* cleaner */
+  letter-spacing: 0.02em;
+  font-weight: 650;
+
+  /* inherit from .hero-navbar */
+  font-size: 1em;
+
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+
+  transition: opacity 0.2s ease, color 0.2s ease;
+}
+
+.nav-link:hover,
+.hero-nav-link-button:hover {
+  opacity: 0.8;
+  color: #7dd3fc;
+  text-decoration: none;
+}
+
+/* Button reset (keep it link-like) */
+.hero-nav-link-button {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  font: inherit;
+}
+
+/* ===========================
+   HERO NAVBAR GRADIENT OVERLAY
+   (keep your existing overlay)
+   =========================== */
+
+.hero-navbar-gradient {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+  background: linear-gradient(
+    to left,
+    #041021 0%,
+    rgba(4, 16, 33, 0.95) 40%,
+    rgba(4, 16, 33, 0) 100%
+  );
+  z-index: -1;
+}
+
+
+/* ===========================
+   HERO BOOK PANEL (RIGHT HALF)
+   =========================== */
+
+.hero-book-panel {
+  position: absolute;
+  top: 0;      /* start at top so gradient aligns with navbar gradient */
+  left: 50%;   /* center of screen */
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    to left,
+    #041021 0%,
+    rgba(4, 16, 33, 0.95) 40%,
+    rgba(4, 16, 33, 0) 100%
+  );
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4rem 4.5rem;
+}
+
+@media (min-width: 768px) {
+  .hero-book-panel {
+    padding: 6rem 6rem;
+  }
+}
+
+.book-info-inner {
+  max-width: 32rem;
+}
+
+/* Stars / meta */
+.book-stars {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #ffffff;
+  font-size: 1.1rem;
+  margin-bottom: 1rem;
+}
+
+.book-stars-text {
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+/* Heading */
+.book-heading {
+  font-family: "Merriweather", Georgia, "Times New Roman", serif;
+  font-weight: 700;
+  font-size: clamp(2rem, 3vw + 1rem, 3rem);
+  line-height: 1.2;
+  color: #ffffff;
+  margin-bottom: 1.25rem;
+}
+
+/* Meta row */
+.book-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem;
+  font-size: 1.2rem;
+  color: rgba(255, 255, 255, 0.8);
+  margin-bottom: 1.1rem;
+}
+
+/* Description */
+.book-text {
+  font-size: 1.2rem;
+  color: rgba(255, 255, 255, 0.85);
+  line-height: 1.5;
+  margin-bottom: 1.4rem;
+}
+
+/* Buttons row */
+.book-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-bottom: 1.6rem;
+}
+
+/* ===========================
+   MINI BOOK COVERS
+   =========================== */
+
+.book-covers-row {
+  display: flex;
+  align-items: flex-end;
+  gap: 0.75rem;
+}
+
+.book-cover {
+  border-radius: 0.75rem;
+  box-shadow: 0 8px 20px rgba(15, 23, 42, 0.45);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.book-cover-1 {
+  width: 4rem;
+  height: 6rem;
+  background-image: url('https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?q=80&w=400&auto=format&fit=crop');
+}
+
+.book-cover-2 {
+  width: 4rem;
+  height: 6rem;
+  background-image: url('https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?q=80&w=400&auto=format&fit=crop');
+}
+
+.book-cover-3 {
+  width: 4rem;
+  height: 6rem;
+  background-image: url('https://images.unsplash.com/photo-1532012197267-da84d127e765?q=80&w=400&auto=format&fit=crop');
+}
+
+.book-covers-caption {
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.8);
+  margin-left: 0.5rem;
+}
+
+/* ===========================
+   HERO NAV DROPDOWN (About)
+   =========================== */
+
+.hero-navbar-dropdown {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+}
+
+/* Make button look exactly like .nav-link */
+.hero-nav-link-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font: inherit;
+  padding: 0;
+}
+
+/* Dropdown panel (hidden by default) */
+.hero-navbar-dropdown-menu {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  margin-top: 0.65rem;
+
+  min-width: 220px;
+  background: white;
+  border-radius: 14px;
+  padding: 0.5rem;
+
+  box-shadow: 0 20px 40px rgba(15, 23, 42, 0.12);
+  border: 1px solid rgba(148, 163, 184, 0.18);
+
+  z-index: 200;
+
+  opacity: 0;
+  visibility: hidden;
+  transform: translateX(-50%) translateY(-6px);
+  transition: opacity 120ms ease, transform 120ms ease, visibility 120ms ease;
+  pointer-events: none;
+}
+
+/* Show when hovering dropdown OR focusing inside (keyboard-friendly) */
+.hero-navbar-dropdown:hover .hero-navbar-dropdown-menu,
+.hero-navbar-dropdown:focus-within .hero-navbar-dropdown-menu {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(-50%) translateY(0);
+  pointer-events: auto;
+}
+
+/* Hover bridge so it doesn't disappear when moving mouse to menu */
+.hero-navbar-dropdown::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 100%;
+  height: 0.8rem;
+}
+
+/* Dropdown items */
+.hero-navbar-dropdown-item {
+  display: block;
+  padding: 0.55rem 0.8rem;
+  border-radius: 10px;
+
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: rgba(2, 8, 23, 0.85);
+  text-decoration: none;
+
+  transition: background 120ms ease, color 120ms ease;
+}
+
+.hero-navbar-dropdown-item:hover {
+  background: rgba(14, 165, 233, 0.10);
+  color: rgba(2, 8, 23, 0.95);
+}
+
+/* ===========================
+   SOCIAL ICONS (RIGHT SIDE)
+   =========================== */
+
+.navbar-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 2rem;
+  padding: 0rem 1rem;
+  color: #ffffff;
+
+  transition: transform 0.2s ease, color 0.2s ease, opacity 0.2s ease;
+}
+
+.navbar-icon:hover {
+  color: #7dd3fc;
+  transform: translateY(-2px);
+  opacity: 0.85;
+}

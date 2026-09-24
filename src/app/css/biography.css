@@ -1,0 +1,82 @@
+/* ================================
+   Biography Section (Tim Ferriss style)
+   ================================ */
+
+.bio-section {
+  padding: 5rem 0;
+  background: #f8fafc;
+}
+
+.bio-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 0 2rem;
+  align-items: center;
+}
+
+/* IMAGE BLOCK */
+.bio-image-wrapper {
+  width: 500px;              /* exact width */
+  aspect-ratio: 2 / 3;       /* 500 × 750 */
+  border-radius: 22px;
+  overflow: hidden;
+  box-shadow: 0 20px 40px rgba(15, 23, 42, 0.08);
+}
+
+
+.bio-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;                 /* ✅ NO distortion */
+  display: block;
+}
+
+/* TEXT BLOCK */
+.bio-text {
+  color: #0f172a;
+  font-size: 1.05rem;
+  line-height: 1.7;
+}
+
+.bio-title {
+  font-family: "Merriweather", Georgia, serif;
+  font-size: clamp(2.2rem, 2.5vw + 1rem, 3rem);
+  font-weight: 800;
+  margin-bottom: 1.5rem;
+  line-height: 1.2;
+}
+
+.bio-text p {
+  margin-bottom: 1.2rem;
+  color: #334155;
+  font-size: 1.05rem;
+}
+
+/* Read More Link */
+.bio-readmore {
+  display: inline-block;
+  margin-top: 0.5rem;
+  font-size: 1rem;
+  color: #0284c7;
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.bio-readmore:hover {
+  color: #0369a1;
+}
+
+/* MOBILE */
+@media (max-width: 900px) {
+  .bio-container {
+    grid-template-columns: 1fr;
+  }
+
+  .bio-image-wrapper {
+    max-height: 420px;
+  }
+}

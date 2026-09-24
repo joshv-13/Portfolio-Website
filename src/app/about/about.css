@@ -1,0 +1,62 @@
+/* ===========================
+   ABOUT PAGE (GLOBAL)
+   =========================== */
+
+.about-page {
+  background: #f6f6f4; /* warm off-white */
+  color: #0b1220;
+  padding: 5.5rem 0 6rem;
+}
+
+/* One consistent container for ALL sections */
+.about-container {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 6rem; /* consistent spacing between sections */
+}
+
+/* Global typography tokens */
+.about-eyebrow {
+  margin: 0 0 0.6rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #0ea5e9;
+  font-size: 0.95rem;
+}
+
+.about-title {
+  font-size: 3.25rem;
+  line-height: 1.05;
+  margin: 0;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: rgba(2, 8, 23, 0.92);
+}
+
+.about-subtitle {
+  margin-top: 1.25rem;
+  font-size: 1.15rem;
+  color: #111827;
+  font-weight: 600;
+}
+
+/* Shared header rhythm */
+.about-section-header {
+  margin-bottom: 3rem;
+}
+
+/* Shared viewport height helper (used by Experience + Publications/Awards) */
+:root {
+  --about-viewport-offset: 220px; /* tweak once, affects the full-height scrollers */
+}
+
+/* Responsive heading scale */
+@media (max-width: 900px) {
+  .about-title {
+    font-size: 2.6rem;
+  }
+}

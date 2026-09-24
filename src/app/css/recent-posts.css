@@ -1,0 +1,135 @@
+/* ===========================
+   Recent Posts Section
+   =========================== */
+
+.recent-posts-section {
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+}
+
+/* HEADER */
+.recent-posts-header {
+  margin-bottom: 2.5rem;
+}
+
+.recent-posts-header .eyebrow {
+  font-size: 0.85rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #0369a1;
+  font-weight: 600;
+  margin-bottom: 0.25rem;
+}
+
+.recent-posts-header h2 {
+  font-size: clamp(1.9rem, 2vw + 1rem, 2.6rem);
+  font-weight: 800;
+  color: #0f172a;
+  font-family: "Merriweather", Georgia, serif;
+  margin: 0;
+}
+
+/* ===========================
+   BIG FULL-WIDTH STACKED POSTS
+   =========================== */
+
+.posts-list {
+  display: flex;
+  flex-direction: column;
+  gap: 2.8rem;
+}
+
+/* Each post card */
+.post-card {
+  display: block;
+  background: #ffffff;
+  border-radius: 22px;
+  overflow: hidden;
+  border: 1px solid rgba(148, 163, 184, 0.18);
+  box-shadow: 0 20px 44px rgba(15, 23, 42, 0.08);
+  text-decoration: none;
+  color: inherit;
+  transition: transform 0.25s ease;
+}
+
+.post-card:hover {
+  transform: translateY(-5px);
+}
+
+/* Large full-width banner image */
+.post-card img {
+  width: 100%;
+  height: 340px;          /* big cinematic height */
+  object-fit: cover;
+}
+
+.post-content {
+  padding: 2rem 2.2rem 2.5rem;
+}
+
+.post-date {
+  font-size: 0.9rem;
+  color: #64748b;
+  margin-bottom: 0.6rem;
+}
+
+.post-title {
+  font-size: 1.6rem;
+  font-weight: 800;
+  color: #041021;
+  font-family: "Merriweather", Georgia, serif;
+  line-height: 1.3;
+  margin-bottom: 0.8rem;
+}
+
+.post-excerpt {
+  font-size: 1rem;
+  color: #475569;
+  line-height: 1.55;
+  max-width: 700px;
+}
+
+/* Pill Button */
+.posts-viewall {
+  margin-top: 2.5rem;
+  display: flex;
+  justify-content: center;
+}
+
+.posts-viewall-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  background: #ffffff;
+  color: #0f172a;
+  border-radius: 9999px;
+  border: 1px solid rgba(148, 163, 184, 0.7);
+  padding: 0.7rem 1.9rem;
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  box-shadow: 0 12px 30px rgba(15, 23, 42, 0.12);
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.posts-viewall-btn:hover {
+  background: #0f7cf2;
+  color: #ffffff;
+  border-color: #0f7cf2;
+  text-decoration: none;
+}
+
+
+/* Responsive Tuning */
+@media (max-width: 768px) {
+  .post-card img {
+    height: 220px;
+  }
+
+  .post-title {
+    font-size: 1.35rem;
+  }
+}

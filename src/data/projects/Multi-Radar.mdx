@@ -1,0 +1,175 @@
+---
+title: "Multi-Radar mmWave Tracking System with Modified GRIN Lens"
+date: "2025-06-10"
+excerpt: 140° wide-angle synchronized radar tracking system for real-time fall detection and healthcare monitoring.
+image: "/images/projects/multi-radar/multi-radar-hero.jpg"
+tech: [mmWave Radar, FMCW, Python, Signal Processing, Multi-Sensor Fusion, GUI Development]
+---
+
+## Overview
+
+This project involved the development of a synchronized multi-radar millimeter-wave tracking system for real-time, privacy-preserving human monitoring in healthcare environments.
+
+Five 60 GHz FMCW radar modules were arranged in a semicircular configuration around a 3D-printed modified GRIN Luneburg lens to achieve continuous 140° angular coverage. The system was experimentally validated in a clinical research environment and demonstrated reliable multi-zone tracking and fall detection.
+
+While the dielectric lens design was led by other members of the team, my work focused on the radar configuration, signal processing pipeline, multi-process backend architecture, synchronization, GUI development, and fall-detection logic.
+
+---
+
+## System Architecture
+
+### Hardware Configuration
+
+The system consists of:
+
+- 5× Infineon BGT60TR13C FMCW radar modules (58–63 GHz)
+- 3D-printed 10 cm modified GRIN Luneburg lens
+- Semicircular radar placement (~28° spacing)
+- Centralized Python control system
+
+The integrated lens increased realized gain by approximately 12 dB per radar, corresponding to roughly a 4× detection range improvement compared to standalone radar modules.
+
+![System Architecture](/images/projects/multi-radar/system-architecture.png)
+
+*Figure: Multi-radar configuration showing five FMCW radar modules arranged around the modified GRIN Luneburg lens to achieve wide-angle beam coverage.*
+
+---
+
+## My Contributions
+
+My primary responsibilities included:
+
+- FMCW radar configuration and tuning  
+- Multi-radar synchronization  
+- Signal acquisition pipeline development  
+- Thresholding and baseline calibration logic  
+- Fall-detection state machine design  
+- Python multiprocessing backend architecture  
+- Real-time GUI development and visualization  
+- System integration and experimental validation  
+
+This project required translating a multi-antenna RF concept into a stable, real-time sensing platform.
+
+---
+
+## Radar & Signal Processing
+
+Each radar operated in 1TX / 1RX mode to prioritize reliable amplitude-based detection at short range.
+
+**Operating parameters included:**
+
+- 58–63 GHz frequency sweep  
+- 16 chirps per frame  
+- 128 samples per chirp  
+- 50 ms frame repetition  
+
+Each radar was independently baseline-calibrated using frame averaging, followed by adaptive thresholding (~0.75 dB above baseline). Detections were fused into a unified occupancy model across five spatial zones.
+
+---
+
+## Multi-Radar Synchronization
+
+To support five radars operating simultaneously, I implemented a multiprocessing architecture in Python:
+
+- One independent process per radar  
+- Shared memory queue for data exchange  
+- Central fusion logic layer  
+- JSON-based messaging for GUI updates  
+
+This architecture ensured:
+
+- True parallel acquisition  
+- Minimal latency  
+- Consistent temporal alignment  
+- Smooth zone-to-zone handoff  
+
+---
+
+## Fall Detection Logic
+
+The fall-detection system followed a structured state-machine approach:
+
+1. Initial presence detection  
+2. Signal persistence verification  
+3. Disappearance timer (10–20 seconds depending on zone)  
+4. Reappearance check or alert trigger  
+
+If no signal reappeared within the timeout window, the system transitioned to an alert state and triggered a GUI warning.
+
+This reduced false alarms while maintaining sensitivity to real fall events.
+
+![Fall Detection Logic](/images/projects/multi-radar/fall-logic.png)
+
+*Figure: Zone-based detection logic and fall state transition behavior across multiple radar sectors.*
+
+---
+
+## Graphical User Interface
+
+I developed a Python-based real-time GUI to visualize:
+
+- Polar radar sectors  
+- Active detection zones  
+- Backend detection states  
+- Alert conditions  
+
+The interface updated dynamically through synchronized backend processes and provided clear visual feedback during subject movement across multiple zones.
+
+![GUI Screenshot](/images/projects/multi-radar/gui-screenshot.png)
+
+*Figure: Real-time GUI showing radar sector activation and detection state during subject movement.*
+
+---
+
+## Experimental Validation
+
+The system was deployed at the Schlegel–UW Research Institute for Aging (Waterloo, ON) and evaluated under real-world motion scenarios.
+
+### With Modified GRIN Lens
+
+![Testing with Lens](/images/projects/multi-radar/testing.png)
+
+*Figure: Experimental validation setup with the modified GRIN Luneburg lens integrated. The lens increases beam directivity and enables continuous 140° angular coverage. During walking trials, the system maintained smooth zone-to-zone transitions without detection gaps.*
+
+### Baseline (Without Lens)
+
+![Baseline Without Lens](/images/projects/multi-radar/baseline.png)
+
+*Figure: Baseline configuration without the lens. Detection coverage is less uniform, and blind regions appear between radar sectors, highlighting the performance gain provided by lens integration.*
+
+---
+
+Results demonstrated:
+
+- Continuous 140° coverage  
+- ~12 dB gain improvement with lens integration  
+- Reliable zone-to-zone tracking  
+- Reduced blind spots compared to lens-free configuration  
+
+---
+
+## Technical Highlights
+
+- Multi-radar FMCW configuration  
+- mmWave signal acquisition and processing  
+- Real-time multiprocessing architecture  
+- Multi-zone data fusion  
+- State-machine-based fall detection  
+- Hardware–software integration in clinical setting  
+
+---
+
+## Key Learnings
+
+- Multi-sensor synchronization is often more challenging than individual sensor design  
+- Robust detection requires careful baseline calibration and threshold tuning  
+- Real-time visualization is critical for debugging and system trust  
+- Translating RF systems into usable tools requires strong integration across hardware and software  
+
+---
+
+## Outcome
+
+This project demonstrated my ability to contribute to end-to-end radar system development — from low-level signal acquisition and synchronization to real-time decision logic and interface design.
+
+It strengthened my interest in advanced sensing systems and reinforced the importance of combining hardware, signal processing, and human-centered system design in real-world deployments.

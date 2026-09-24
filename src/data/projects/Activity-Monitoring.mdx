@@ -1,0 +1,132 @@
+---
+title: "Radar-Based Activity Monitoring in Long-Term Care Homes"
+date: "2025-01-01"
+excerpt: Privacy-preserving bathroom activity recognition (including falls) using a low-cost 60 GHz FMCW radar + deep learning, validated across multiple bathroom layouts.
+image: "/images/projects/ltc-bathroom-radar/hero.jpg"
+tech: [mmWave Radar, FMCW, Signal Processing, Deep Learning, CNN-LSTM, Transfer Learning, Python, Dataset Collection]
+---
+
+## Overview
+
+I built and evaluated a privacy-preserving activity monitoring system for long-term care (LTC) bathrooms using a commercial 60 GHz mmWave FMCW radar. The goal was to recognize both dynamic and semi-static behaviors (e.g., sitting, standing, washing hands) and reliably detect falls—without cameras or wearables.
+
+The system combines radar signal processing (range–Doppler + range–elevation heatmaps) with deep learning and a deployment-oriented pipeline (occupancy detection → multiperson detection → activity classification). The approach was validated with **10 participants**, **3 bathroom layouts**, and **~503k labeled radar frames**.
+
+---
+
+## What I Built
+
+- End-to-end radar processing pipeline to generate **range–Doppler** and **range–elevation** features
+- A modular **system workflow**: occupancy → multiperson → activity classification
+- Deep learning training + evaluation across multiple rooms/layouts
+- **Majority voting** over consecutive predictions to reduce jitter from noisy frames
+- **Transfer learning** adaptation to new bathrooms with minimal labeled data
+
+---
+
+## System Workflow
+
+The deployed workflow is designed to reduce unnecessary compute and prevent false alarms:
+
+1. **Occupancy detection** (empty vs occupied)
+2. **Multiperson detection** (single vs multiple people)
+3. **Activity classification** (routine activities vs fall)
+
+![System workflow for LTC activity monitoring](/images/projects/ltc-bathroom-radar/fig1-workflow.png)
+*Figure: System workflow used in the final monitoring pipeline (occupancy → multiperson → activity classification).*
+
+---
+
+## Activities Recognized
+
+The system targets common bathroom behaviors relevant to safety + care monitoring:
+
+- Sitting on toilet  
+- Standing by toilet  
+- Washing hands  
+- Walking  
+- Cleaning (mopping / wiping surfaces)  
+- Fall (detected via “on-floor” presence)  
+- Multiperson (caregiver present / assisting)
+
+![Examples of activities + radar heatmaps](/images/projects/ltc-bathroom-radar/fig2-activities-heatmaps.png)
+*Figure: Example activities with corresponding radar heatmaps (range–Doppler + angle profiles), including multiperson and fall.*
+
+---
+
+## Experimental Setup & Data Collection
+
+A commercial **Infineon BGT60TR13C** 60 GHz FMCW radar was mounted ~2 m high and angled downward to cover the sink/toilet regions. Data was collected across **three distinct bathrooms**. To increase generalization, the toilet position was also varied within the primary room to simulate layout changes.
+
+![Bathroom layouts and radar placement](/images/projects/ltc-bathroom-radar/fig3-setup-layouts.png)
+*Figure: Radar placement and the different bathroom layouts used for training/testing, including toilet position variations.*
+
+---
+
+## Signal Processing Pipeline
+
+Raw ADC data is processed into spatial + motion representations:
+
+- DC bias removal  
+- Range FFT  
+- Moving Target Indicator (MTI) for static clutter suppression  
+- Doppler FFT → **range–Doppler heatmap**  
+- Capon beamforming across receivers → **range–elevation heatmap**
+
+These heatmaps are then stacked into short temporal sequences for model input.
+
+![Radar processing block diagram](/images/projects/ltc-bathroom-radar/fig4-processing.png)
+*Figure: End-to-end processing pipeline from raw radar data → heatmaps → model inference (+ voting and transfer learning path).*
+
+---
+
+## Machine Learning Approach
+
+I benchmarked multiple models (traditional ML and deep learning), with the final system using a **CNN-LSTM** because it balances:
+
+- spatial feature extraction (CNN)
+- temporal consistency (LSTM)
+- robustness to noisy, reflective bathroom environments
+
+A **majority voting** scheme is applied across consecutive predictions to stabilize outputs in real time.
+
+![Model architecture visualization](/images/projects/ltc-bathroom-radar/CNNLSTM.png)
+*Figure: High-level architecture used for activity recognition (convolutional backbone + recurrent temporal modeling).*
+
+---
+
+## Results (Multi-Room Validation)
+
+### Activity Classification + Fall Detection
+Across three bathrooms, performance remained high:
+- **Room 1:** ~94.8% activity accuracy  
+- **Room 2:** ~98.5% activity accuracy  
+- **Room 3:** ~95.3% activity accuracy  
+- **Fall detection:** ~95% precision
+
+### Occupancy Detection
+- Near-perfect in the training environment and strong across new rooms.
+
+### Multiperson Detection
+- High precision for identifying multiperson scenarios (caregiver present), with errors mostly occurring in edge cases (e.g., cleaning near sink resembling multiperson reflections).
+
+![Confusion matrices (activity, occupancy, multiperson)](/images/projects/ltc-bathroom-radar/fig6-confusion-matrices.png)
+*Figure: Confusion matrices across tasks and rooms: activity classification, occupancy detection, and multiperson detection.*
+
+---
+
+## Generalization + Transfer Learning
+
+When the trained model was applied to a new bathroom **without adaptation**, accuracy dropped significantly due to changed geometry and reflection patterns (position cues shift between rooms). Transfer learning was used to adapt to a new environment using only a small amount of labeled data per activity, restoring strong performance.
+
+![Room generalization without transfer learning](/images/projects/ltc-bathroom-radar/fig7-no-transfer.png)
+*Figure: Example performance drop when applying the model to a new bathroom layout without transfer learning.*
+
+---
+
+## Key Learnings
+
+- In bathrooms, **spatial context matters**: range–elevation helps when Doppler signatures are weak (semi-static activities).
+- A practical system needs **workflow gating** (occupancy → multiperson → activity) to reduce compute and avoid unnecessary alerts.
+- **Voting and transfer learning** dramatically improve stability and deployability across real environments.
+

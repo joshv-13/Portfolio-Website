@@ -1,0 +1,43 @@
+.bio {
+  padding: 0;
+}
+
+.bio-grid {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  gap: 5rem;
+  align-items: start;
+}
+
+.bio-right {
+  font-size: 1.1rem;
+  line-height: 1.85;
+  color: #0b1220;
+}
+
+.bio-right p {
+  margin: 0 0 1.6rem;
+}
+
+.bio-right em {
+  font-style: italic;
+}
+
+.bio-right a {
+  color: #0b66d1;
+  text-decoration: underline;
+  text-decoration-thickness: 0.08em;
+  text-underline-offset: 3px;
+}
+
+.bio-right a:hover {
+  opacity: 0.85;
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .bio-grid {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+}

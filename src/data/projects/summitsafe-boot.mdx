@@ -1,0 +1,150 @@
+---
+title: "SummitSafe: Energy-Harvesting Frostbite Prevention Boot"
+date: "2024-11-20"
+excerpt: "A wearable sensing and actuation system embedded into a winter boot to detect early hypothermia biomarkers and stimulate blood flow using self-generated power."
+image: "/images/projects/summitsafe/hero.jpg"
+tech: [Wearable Electronics, Embedded Systems, Arduino, Energy Harvesting, Biomedical Sensing, Human-Centered Design]
+---
+
+## Overview
+
+**SummitSafe** is a wearable sensing system embedded within a winter boot designed to detect early indicators of cold-related injury and intervene before frostbite occurs.
+
+The system integrates:
+
+- In-boot temperature sensing  
+- Heart rate monitoring  
+- Piezoelectric energy harvesting  
+- Haptic feedback via vibration motors  
+
+The goal was to create a low-profile, durable, partially self-sustaining system capable of operating in extreme environments such as mountaineering, skiing, and northern climates.
+
+---
+
+## Prototype
+
+![SummitSafe Prototype](/images/projects/summitsafe/prototype.png)
+
+The prototype integrates all sensing, actuation, and energy-harvesting components directly into the boot lining.
+
+Key integration features:
+
+- LilyPad microcontroller stitched using conductive thread  
+- Embedded piezoelectric discs within the sole  
+- Temperature sensor positioned inside the boot cavity  
+- Dual vibration motors placed for localized circulation stimulation  
+- Lithium polymer battery integrated into side lining  
+
+The system maintains flexibility while preserving user comfort and boot integrity.
+
+---
+
+## System Architecture
+
+![System Architecture](/images/projects/summitsafe/architecture.png)
+
+The wearable system integrates sensing, processing, actuation, and energy harvesting within a compact textile-compatible platform.
+
+### Microcontroller
+**Arduino LilyPad**
+- Designed for wearable electronics
+- Low profile
+- Integrated battery interface
+
+### Sensors
+- Temperature sensor (ambient in-boot measurement)
+- Heart rate sensor (physiological monitoring)
+
+### Actuators
+- Dual vibration motors for circulation stimulation
+
+### Energy Subsystem
+- Piezoelectric discs (mechanical-to-electrical conversion)
+- Diode rectifier for AC-to-DC conversion
+- 3.7V 1500mAh LiPo battery
+
+Conductive thread was used to maintain flexibility and waterproof integration.
+
+---
+
+## Energy Harvesting
+
+Piezoelectric discs embedded beneath the foot generate voltage during walking.
+
+Measured output:
+- ~170 mV per compression cycle
+
+While insufficient for full system autonomy, the harvested energy provides supplemental charging during prolonged activity.
+
+---
+
+## Detection Logic
+
+The system activates vibration motors when risk conditions are met.
+
+### Temperature Threshold
+Motor activates when temperature falls below **22°C**.
+
+### Combined Risk Condition
+If:
+- Heart rate is detected  
+- AND temperature is below threshold  
+
+Then:
+- Vibration motors activate to stimulate circulation  
+
+Threshold values are configurable.
+
+---
+
+## Functional Testing
+
+### Temperature Test
+Temperature readings were logged and verified against activation thresholds.
+
+### Heart Rate Test
+Sensor successfully detected pulse and triggered motor activation when temperature threshold conditions were met.
+
+### Integrated System Test
+- Temperature threshold: 24°C  
+- Heart rate threshold: 60 bpm  
+- System triggered haptic feedback under defined test conditions  
+
+---
+
+## Engineering Priorities
+
+- Low-profile wearable integration  
+- Durability under repeated compression  
+- Ease of maintenance  
+- Expandability for commercial outdoor applications  
+
+The design avoids bulky heating elements and instead focuses on early detection and circulation stimulation.
+
+---
+
+## Limitations
+
+- Piezoelectric output is supplemental only  
+- Ambient temperature measurement rather than tissue temperature  
+- Limited field testing in extreme climates  
+
+Future iterations may integrate:
+- Improved harvesting efficiency  
+- Localized heating elements  
+- Wireless telemetry  
+- Enhanced physiological modeling  
+
+---
+
+## Key Outcomes
+
+SummitSafe demonstrates:
+
+- Embedded wearable electronics integration  
+- Energy harvesting in dynamic environments  
+- Real-time physiological risk detection  
+- Low-power actuation strategies  
+- Human-centered safety engineering  
+
+This project bridges biomedical sensing and rugged outdoor systems design.
