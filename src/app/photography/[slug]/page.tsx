@@ -11,6 +11,29 @@ type Props = {
   }>;
 };
 
+const BASE_PATH = "/Portfolio-Website";
+
+export function generateStaticParams() {
+  return photos.map((photo) => ({
+    slug: photo.slug,
+  }));
+}
+
+export const dynamicParams = false;
+
+function getImageSrc(src: string) {
+  // Prefix local public-file paths; preserve remote and prefixed URLs.
+  if (
+    src.startsWith("/") &&
+    !src.startsWith("//") &&
+    !src.startsWith(`${BASE_PATH}/`)
+  ) {
+    return `${BASE_PATH}${src}`;
+  }
+
+  return src;
+}
+
 export default async function PhotoPage({ params }: Props) {
   const { slug } = await params;
 
@@ -29,7 +52,11 @@ export default async function PhotoPage({ params }: Props) {
       <section className="single-photo-container">
         <div className="single-photo-image-wrapper">
           <Image
-            src={photo.src}
+            src={
+              typeof photo.src === "string"
+                ? getImageSrc(photo.src)
+                : photo.src
+            }
             alt={photo.title}
             width={photo.width}
             height={photo.height}
