@@ -1,4 +1,4 @@
-const base = "/images/photography";
+const base = "/Portfolio-Website/images/photography";
 
 export const photos = [
   {

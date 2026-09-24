@@ -12,7 +12,7 @@ export default function PhotographyPage() {
       {/* HERO */}
       <section className="photo-hero">
         <Image
-          src="/images/photography/Annapurna.jpeg"
+          src="/Portfolio-Website/images/photography/Annapurna.jpeg"
           alt="Photography Hero"
           fill
           priority

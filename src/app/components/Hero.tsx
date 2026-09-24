@@ -12,7 +12,7 @@ export default function Hero() {
       {/* BACKGROUND IMAGE */}
       <div className="hero-bg">
         <Image
-          src="/images/portrait-home-2.jpg"
+          src="/Portfolio-Website/images/portrait-home-2.jpg"
           alt="Author portrait"
           fill
           priority

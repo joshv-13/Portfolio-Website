@@ -12,7 +12,7 @@ export default function Biography() {
         {/* IMAGE */}
         <div className="bio-image-wrapper">
           <Image
-            src="/images/biography-home.png"
+            src="/Portfolio-Website/images/biography-home.png"
             alt="Josh Visser biography photo"
             width={500}
             height={750}

@@ -2,7 +2,7 @@
 title: "Radar-Based Activity Monitoring in Long-Term Care Homes"
 date: "2025-01-01"
 excerpt: Privacy-preserving bathroom activity recognition (including falls) using a low-cost 60 GHz FMCW radar + deep learning, validated across multiple bathroom layouts.
-image: "/images/projects/ltc-bathroom-radar/hero.jpg"
+image: "/Portfolio-Website/images/projects/ltc-bathroom-radar/hero.jpg"
 tech: [mmWave Radar, FMCW, Signal Processing, Deep Learning, CNN-LSTM, Transfer Learning, Python, Dataset Collection]
 ---
 
@@ -32,7 +32,7 @@ The deployed workflow is designed to reduce unnecessary compute and prevent fals
 2. **Multiperson detection** (single vs multiple people)
 3. **Activity classification** (routine activities vs fall)
 
-![System workflow for LTC activity monitoring](/images/projects/ltc-bathroom-radar/fig1-workflow.png)
+![System workflow for LTC activity monitoring](/Portfolio-Website/images/projects/ltc-bathroom-radar/fig1-workflow.png)
 *Figure: System workflow used in the final monitoring pipeline (occupancy → multiperson → activity classification).*
 
 ---
@@ -49,7 +49,7 @@ The system targets common bathroom behaviors relevant to safety + care monitorin
 - Fall (detected via “on-floor” presence)  
 - Multiperson (caregiver present / assisting)
 
-![Examples of activities + radar heatmaps](/images/projects/ltc-bathroom-radar/fig2-activities-heatmaps.png)
+![Examples of activities + radar heatmaps](/Portfolio-Website/images/projects/ltc-bathroom-radar/fig2-activities-heatmaps.png)
 *Figure: Example activities with corresponding radar heatmaps (range–Doppler + angle profiles), including multiperson and fall.*
 
 ---
@@ -58,7 +58,7 @@ The system targets common bathroom behaviors relevant to safety + care monitorin
 
 A commercial **Infineon BGT60TR13C** 60 GHz FMCW radar was mounted ~2 m high and angled downward to cover the sink/toilet regions. Data was collected across **three distinct bathrooms**. To increase generalization, the toilet position was also varied within the primary room to simulate layout changes.
 
-![Bathroom layouts and radar placement](/images/projects/ltc-bathroom-radar/fig3-setup-layouts.png)
+![Bathroom layouts and radar placement](/Portfolio-Website/images/projects/ltc-bathroom-radar/fig3-setup-layouts.png)
 *Figure: Radar placement and the different bathroom layouts used for training/testing, including toilet position variations.*
 
 ---
@@ -75,7 +75,7 @@ Raw ADC data is processed into spatial + motion representations:
 
 These heatmaps are then stacked into short temporal sequences for model input.
 
-![Radar processing block diagram](/images/projects/ltc-bathroom-radar/fig4-processing.png)
+![Radar processing block diagram](/Portfolio-Website/images/projects/ltc-bathroom-radar/fig4-processing.png)
 *Figure: End-to-end processing pipeline from raw radar data → heatmaps → model inference (+ voting and transfer learning path).*
 
 ---
@@ -90,7 +90,7 @@ I benchmarked multiple models (traditional ML and deep learning), with the final
 
 A **majority voting** scheme is applied across consecutive predictions to stabilize outputs in real time.
 
-![Model architecture visualization](/images/projects/ltc-bathroom-radar/CNNLSTM.png)
+![Model architecture visualization](/Portfolio-Website/images/projects/ltc-bathroom-radar/CNNLSTM.png)
 *Figure: High-level architecture used for activity recognition (convolutional backbone + recurrent temporal modeling).*
 
 ---
@@ -110,7 +110,7 @@ Across three bathrooms, performance remained high:
 ### Multiperson Detection
 - High precision for identifying multiperson scenarios (caregiver present), with errors mostly occurring in edge cases (e.g., cleaning near sink resembling multiperson reflections).
 
-![Confusion matrices (activity, occupancy, multiperson)](/images/projects/ltc-bathroom-radar/fig6-confusion-matrices.png)
+![Confusion matrices (activity, occupancy, multiperson)](/Portfolio-Website/images/projects/ltc-bathroom-radar/fig6-confusion-matrices.png)
 *Figure: Confusion matrices across tasks and rooms: activity classification, occupancy detection, and multiperson detection.*
 
 ---
@@ -119,7 +119,7 @@ Across three bathrooms, performance remained high:
 
 When the trained model was applied to a new bathroom **without adaptation**, accuracy dropped significantly due to changed geometry and reflection patterns (position cues shift between rooms). Transfer learning was used to adapt to a new environment using only a small amount of labeled data per activity, restoring strong performance.
 
-![Room generalization without transfer learning](/images/projects/ltc-bathroom-radar/fig7-no-transfer.png)
+![Room generalization without transfer learning](/Portfolio-Website/images/projects/ltc-bathroom-radar/fig7-no-transfer.png)
 *Figure: Example performance drop when applying the model to a new bathroom layout without transfer learning.*
 
 ---
