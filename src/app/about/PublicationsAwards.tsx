@@ -43,6 +43,11 @@ export default function PublicationsAwards() {
       summary: 'Experimental validation of a mm-wave radar system for fall detection in washroom environments.',
       link: 'https://doi.org/10.1109/HI-POCT64255.2024.10876204',
     },
+    {
+      title: 'Reflectarray-Assisted Radar Gesture Sensing for Touchless Access: Principles, Design, and Demonstration',
+      venue: 'IEEE Sensors Magazine (Submitted)',
+      summary: 'Tutorial paper on the use of Reconfigurable Intelligent Surfaces for indoor human sensing applications',
+    },
     
     {
       title: 'Millimeter-Wave Multi-Radar Tracking System Utilizing a Modified GRIN Luneburg Lens',
