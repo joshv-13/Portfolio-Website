@@ -2,18 +2,6 @@ const base = "/Portfolio-Website/images/photography";
 
 export const photos = [
   {
-    slug: "annapurna",
-    src: `${base}/Annapurna.jpeg`,
-    title: "Annapurna",
-    location: "Nepal",
-    year: "2026",
-    category: "Himalaya",
-    width: 2048,
-    height: 1536,
-    blurb:
-      "Taken high in the Annapurna region after a long day on the trail. The scale of the mountains never really translates through photos, but the shifting light and layers of snow gave the landscape an unreal sense of depth.",
-  },
-  {
     slug: "reflection",
     src: `${base}/canal.jpeg`,
     title: "Reflection",
@@ -108,18 +96,6 @@ export const photos = [
     height: 2048,
     blurb:
       "One of the rifugios along the Alta Via 2 trail. I liked the contrast between the structure and the surrounding mountain terrain.",
-  },
-  {
-    slug: "quiet-morning",
-    src: `${base}/Japan.jpeg`,
-    title: "Quiet Morning",
-    location: "Japan",
-    year: "2026",
-    category: "Urban",
-    width: 3321,
-    height: 5457,
-    blurb:
-      "An early morning street scene in Japan before the city fully woke up. The vertical framing helped emphasize the density and scale of the architecture.",
   },
   {
     slug: "monsoon-light",
@@ -264,5 +240,29 @@ export const photos = [
     height: 1536,
     blurb:
       "A winter scene in Whistler during changing weather. The layered snow and low visibility gave the mountains a softer and more minimal look.",
+  },
+  {
+    slug: "annapurna",
+    src: `${base}/Annapurna.jpeg`,
+    title: "Annapurna",
+    location: "Nepal",
+    year: "2026",
+    category: "Himalaya",
+    width: 2048,
+    height: 1536,
+    blurb:
+      "Taken high in the Annapurna region after a long day on the trail. The scale of the mountains never really translates through photos, but the shifting light and layers of snow gave the landscape an unreal sense of depth.",
+  },
+  {
+    slug: "quiet-morning",
+    src: `${base}/Japan.jpeg`,
+    title: "Quiet Morning",
+    location: "Japan",
+    year: "2026",
+    category: "Urban",
+    width: 3321,
+    height: 5457,
+    blurb:
+      "An early morning street scene in Japan before the city fully woke up. The vertical framing helped emphasize the density and scale of the architecture.",
   },
 ];
