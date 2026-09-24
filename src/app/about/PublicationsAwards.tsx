@@ -18,6 +18,19 @@ type Award = {
 
 export default function PublicationsAwards() {
   const publications: Pub[] = [
+
+    {
+      title: 'Activity Monitoring System for Long-Term Care Bathrooms Using mm-Wave FMCW Radar',
+      venue: 'IEEE Sensors Journal (2026)',
+      summary: 'Journal submission describing a full FMCW radar-based monitoring system for long-term care settings.',
+      link: 'https://doi.org/10.1109/JSEN.2026.3693940',
+    },
+    {
+      title: 'Modified GRIN Luneburg Lens for High-Efficiency Millimeter-Wave Multi-Radar Sensing',
+      venue: 'IEEE EuCAP (2026)',
+      summary: 'Conference paper presenting a GRIN Luneburg lens design for Multi-Radar Sensing.',
+      link: 'https://doi.org/10.23919/EuCAP68105.2026.11612377',
+    },
     {
       title: 'AI-Based Activity Monitoring in Washrooms Using Low-Resolution Radar',
       venue: 'IEEE LAMC (2025)',
@@ -30,33 +43,22 @@ export default function PublicationsAwards() {
       summary: 'Experimental validation of a mm-wave radar system for fall detection in washroom environments.',
       link: 'https://doi.org/10.1109/HI-POCT64255.2024.10876204',
     },
-    {
-      title: 'Activity Monitoring System for Long-Term Care Bathrooms Using mm-Wave FMCW Radar',
-      venue: 'IEEE Sensors Journal (Submitted)',
-      summary: 'Journal submission describing a full FMCW radar-based monitoring system for long-term care settings.',
-    },
+    
     {
       title: 'Millimeter-Wave Multi-Radar Tracking System Utilizing a Modified GRIN Luneburg Lens',
       venue: 'IEEE Transactions on Antennas and Propagation (Submitted)',
       summary: 'Multi-radar healthcare monitoring system leveraging a modified GRIN Luneburg lens.',
       link: 'https://arxiv.org/abs/2601.12629',
     },
-    {
-      title: 'Synchronized Multi-Radar Fusion System for Real-Time Presence Detection',
-      venue: 'IEEE Radar Conference (Submitted)',
-      summary: 'Fusion-based radar system enabling synchronized real-time presence detection.',
-    },
-    {
-      title: 'Detecting Distracted Drivers Using mm-Wave FMCW Radar and AI',
-      venue: 'IEEE Sensors Journal (In preparation)',
-      summary: 'In-progress work applying mm-wave radar and AI to distracted driver detection.',
-    },
+    
   ]
 
   const awards: Award[] = [
+    {title: 'NSERC Canada Graduate Research Scholarship — Master’s (CGRS M)', year: '2026', summary: 'Awarded in support of my master’s research in radar sensing and electromagnetics at the University of Waterloo.'},
+    {title: 'President’s Graduate Scholarship — University of Waterloo', year: '2026', summary: 'Awarded by the University of Waterloo in recognition of receiving an NSERC Canada Graduate Research Scholarship.'},
+    { title: '3rd Place & Semifinalist — IEEE AP-S Student Design Contest', year: '2025', summary: 'International design contest recognition for technical system design.' },
     { title: 'Rising Stars Research Fellow — University of Waterloo', year: '2024', summary: 'Competitive fellowship recognizing high-potential graduate researchers.' },
     { title: 'MITACS Accelerate Intern', year: '2024', summary: 'Industry–academia research internship focused on applied R&D.' },
-    { title: '3rd Place & Semifinalist — IEEE AP-S Student Design Contest', year: '2025', summary: 'International design contest recognition for technical system design.' },
     { title: 'Dean’s Honour List — University of Guelph (All Semesters)', year: '2020–2025', summary: 'Awarded for consistent academic excellence across all semesters.' },
     { title: 'Undergraduate Entrance Scholarship — University of Guelph', year: '2020', summary: 'Merit-based entrance scholarship for academic achievement.' },
   ]

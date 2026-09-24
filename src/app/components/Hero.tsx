@@ -131,9 +131,10 @@ export default function Hero() {
 
             {/* Description */}
             <p className="book-text">
-              I’m a recent Biomedical Engineering graduate focused on RF sensing and signal processing. 
-              My work combines hardware experimentation with machine learning, and I’m preparing to 
-              pursue graduate research in advanced sensing systems.
+              I’m a master’s student in Electrical and Computer Engineering at the
+              University of Waterloo, with a background in Biomedical Engineering.
+              My research combines radar sensing, electromagnetics, signal processing,
+              and machine learning to develop sensing systems for real-world applications.
             </p>
 
             {/* Buttons */}
