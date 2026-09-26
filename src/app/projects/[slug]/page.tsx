@@ -23,9 +23,10 @@ export default async function BlogPostPage({
   return (
     <main style={{ padding: '4.5rem 0 5rem' }}>
       <div className="container" style={{ maxWidth: 820 }}>
-        <a href="/projects" style={{ fontWeight: 800, textDecoration: 'none' }}>
+        <a href="/Portfolio-Website/projects" style={{ fontWeight: 800, textDecoration: 'none' }}>
           ← Back to Projects
         </a>
+        
 
         <h1 style={{ marginTop: '1.25rem', marginBottom: '0.5rem', color: 'rgba(2,8,23,0.95)' }}>
           {project.frontmatter.title}
