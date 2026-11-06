@@ -1,0 +1,139 @@
+---
+title: "Blind Corner Sensing System for Smart Factory Applications"
+tag: "RIS Sensing"
+date: "2026-11-06"
+excerpt: A compact 60 GHz radar and fixed printed reflectarray combine forward and rear-side sensing for human–robot monitoring at blind corridor intersections.
+image: "/Portfolio-Website/images/projects/blind-corner-sensing/hero.png"
+tech: [mmWave Radar, FMCW, Reflectarrays, RIS, Signal Processing, Micro-Doppler, Support Vector Machines, Human–Robot Sensing, Industry 4.0]
+---
+
+## Overview
+
+Blind intersections are a difficult place for people and mobile robots to share space. Walls, shelving, and machinery can hide approaching traffic until it reaches the crossing. This project investigates how a compact infrastructure-mounted sensor could provide an additional view of those approaches.
+
+Working with the University of Waterloo research team, I investigated a **single 60 GHz FMCW radar paired with a fixed printed reflectarray**, described in the paper as a fixed RIS. The module retains useful forward sensing while redirecting energy toward a selected rear-side region, providing complementary coverage with one active RF sensor.
+
+Experiments demonstrated human and robot detection, range tracking, apparent angle-of-arrival estimation, and motion classification. The prototype is a sensing foundation for future collision-awareness systems; robot communication, worker warnings, and automatic stopping were not implemented.
+
+---
+
+## What We Built
+
+- A compact **Infineon BGT60TR13C radar–RIS module** with a custom 3D-printed fixture
+- A **112-cell passive printed aperture**, mounted approximately **2 cm** from the radar
+- Complementary **direct forward** and **RIS-assisted rear** sensing paths
+- Processing for target detection, range tracking, apparent azimuth, and **micro-Doppler analysis**
+- An **SVM classifier** to distinguish human and robot motion
+- Hardware comparisons against **radar only** and a **same-size metal sheet**, followed by corridor-intersection trials
+
+![Back and side views of the radar–reflectarray sensing module](/Portfolio-Website/images/projects/blind-corner-sensing/prototype.png)
+*The radar is the only active RF sensing node. The printed surface and holder establish a compact redirected propagation path.*
+
+---
+
+## Complementary Coverage at a Blind Corner
+
+The system uses two propagation paths:
+
+- **Direct path:** radar → target → radar
+- **Redirected path:** radar → reflectarray → target → reflectarray → radar
+
+The printed phase pattern compensates for the curved illumination from the nearby radar feed. The approximately **40 mm aperture** operates with a fixed map, illuminating a selected direction rather than electronically scanning the entire secondary region.
+
+![Conceptual comparison of two separate radars and one radar–RIS node at a corridor intersection](/Portfolio-Website/images/projects/blind-corner-sensing/coverage-concept.png)
+*Conceptual deployment geometry from the paper. The prototype demonstrates complementary sensing, but does not yet reliably assign unknown simultaneous returns to individual corridor branches.*
+
+---
+
+## Experimental Setup & Data Collection
+
+The radar uses **one transmit channel and three receive channels**, sweeping approximately **58.25–63.25 GHz**. Its roughly **5 GHz bandwidth** gives a nominal **3 cm range resolution**. Each frame contains **64 chirps**, with **134 samples per chirp**, at approximately **12.94 frames per second**.
+
+The evaluation progressed through three stages:
+
+1. **System characterization:** approach–retreat measurements to examine usable range and angular response, plus matched hardware comparisons.
+2. **Application sensing:** repeated entry/exit trials and extended human and robot motion recordings for tracking and classification.
+3. **Blind-corner trials:** human and robot approaches from the forward and rear regions at an indoor intersection, with three repetitions of each condition for **12 trials in total**.
+
+Application measurements used **one human participant and one robot**, so the results characterize the tested setup rather than generalization across workers, robot platforms, or factories.
+
+---
+
+## Signal Processing Pipeline
+
+The application pipeline extracts both position-related information and motion structure:
+
+1. Remove the fast-time mean, apply a Hann window, and compute the **range FFT**.
+2. Detect candidate targets using range-dependent background and local-contrast checks, with continuity filtering for the selected range track.
+3. Extract complex samples around the detected target range.
+4. Apply chirp-to-chirp **moving-target indication (MTI)** and a Doppler FFT to obtain target-gated micro-Doppler profiles.
+5. Estimate the dominant Doppler centroid, align the profiles to it, and normalize their power.
+6. Classify temporal variation in the aligned profiles and calculate apparent azimuth from receiver phase relationships.
+
+Centroid alignment reduces the influence of bulk translation, helping expose differences between articulated walking motion and predominantly rigid robot motion. For the reflected path, the measured angle is an **apparent arrival angle**, not a direct measurement of the target's physical bearing behind the module.
+
+---
+
+## Human–Robot Motion Classification
+
+Human walking produces a broader, time-varying Doppler structure as different body parts move at different velocities. The robot example has a narrower, more stable ridge around its motion centroid.
+
+![Centroid-aligned micro-Doppler examples for human and robot movement](/Portfolio-Website/images/projects/blind-corner-sensing/micro-doppler.png)
+*Human motion on the left and robot motion on the right. These normalized examples emphasize relative spectral structure, not absolute received-power differences.*
+
+The classifier uses **temporal variance across relative-velocity bins** over **16-frame windows**, advanced by four frames. Standardized features feed an **RBF support vector machine**. Grouped cross-validation keeps all windows from a recording in the same fold.
+
+| True class | Evaluated windows | Correct predictions | Recall |
+| --- | ---: | ---: | ---: |
+| Human | 642 | 642 | 100.0% |
+| Robot | 778 | 654 | 84.1% |
+
+The displayed evaluation contains **1,296 correct predictions out of 1,420 windows**, giving approximately **91.3% accuracy**. All 124 errors are robot windows classified as human. These are window-level results from the recorded subjects, not independent-person or unseen-robot validation.
+
+---
+
+## Results: Range, Tracking & Blind-Corner Trials
+
+- **Human detection:** approximately **5 m** along the RIS-assisted path; the illustrated angular experiment reaches **4.69 m at 40°**.
+- **Robot detection:** approximately **6 m** along the RIS-assisted path, as reported in the paper.
+- **Forward sensing retained:** robot range tracks and changing apparent azimuth remain observable with the reflectarray installed.
+- **Combined outputs:** four representative intersection trials show accepted range tracks, apparent angles, and human–robot predictions together.
+
+![Four blind-corner trials showing range tracks and apparent azimuth colored by predicted target type](/Portfolio-Website/images/projects/blind-corner-sensing/intersection-trials.png)
+*Red overlays indicate tracked range. Blue and orange angle markers indicate human and robot predictions; gray markers represent uncertain or unclassified estimates. Prediction colors are not ground-truth labels.*
+
+The illustrated trials demonstrate the combined sensing outputs. Gaps in the accepted detections or angle estimates do not establish that a corridor is empty, and the plots do not independently establish classification accuracy for the intersection scenario.
+
+---
+
+## Hardware Comparison
+
+The paper reports the following target-return contrasts using a **shared full-recording RIS reference**:
+
+| Configuration | Rear-section contrast | Forward-section contrast |
+| --- | ---: | ---: |
+| Radar + fixed RIS | **10.99 dB** | 13.97 dB |
+| Radar only | 7.50 dB | **20.49 dB** |
+| Radar + metal sheet | 5.97 dB | 6.18 dB |
+
+In the rear straight section, the RIS configuration exceeds radar only by **3.49 dB** and the metal sheet by **5.02 dB**. Radar only produces the strongest forward-section ratio, while the RIS configuration has the lowest estimated background in both sections.
+
+This is a coverage trade-off: the surface improves the reported rear-section response while preserving useful forward sensing. The contrasts describe the complete tested configurations and their processing references; they are **not calibrated SNR or sensitivity gains**, nor an isolated measurement of the binary phase pattern's contribution.
+
+---
+
+## Key Learnings & Next Steps
+
+- **A passive aperture can extend the useful coverage of one radar.** Its benefit depends on the intersection geometry and selected sensing direction.
+- **Motion structure helps distinguish people and robots.** Centroid-aligned micro-Doppler features capture information beyond target range and bulk speed.
+- **Region assignment remains a central challenge.** Multiple returns can be observed, but reliable branch assignment and simultaneous multi-target tracking require further development.
+- **Electronic reconfiguration could expand coverage.** Selectable phase maps could address different rear directions while preserving the forward view.
+- **Deployment needs broader validation and controller integration.** Next steps include additional people and robots, independent trajectory ground truth, response-time measurements, and defined behavior when detections are uncertain.
+
+---
+
+## Research Context
+
+Based on *Radar–RIS Node for Complementary Indoor Coverage: Human and Robot Sensing at Corridor Intersections*, by Amirbahador Mansoori, Josh Visser, Kirolos Sedra, Raafat R. Mansour, and George Shaker, University of Waterloo.
+
+Figures are adapted from the supplied manuscript. The date above is the portfolio entry date, not a publication date.

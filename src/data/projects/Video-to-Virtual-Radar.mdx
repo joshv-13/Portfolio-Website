@@ -1,0 +1,145 @@
+---
+title: "From Video to Virtual Radar: Gesture Recognition with Digital Twins"
+tag: "Radar Digital Twins"
+date: "2026-11-06"
+excerpt: A video-to-simulation workflow combines reconstructed human motion, motion diffusion, electromagnetic simulation, and domain-aware learning to improve radar gesture recognition with limited real training data.
+image: "/Portfolio-Website/images/projects/video-to-virtual-radar/hero.png"
+tech: [Digital Twins, Radar Simulation, Perceive EM, GVHMR, SinMDM, Motion Diffusion, PyTorch, CNN, Domain Adaptation, Python]
+---
+
+## Overview
+
+Collecting radar training data for every person, gesture, and sensor placement is expensive. I built a workflow that starts with an ordinary video demonstration and turns it into controllable synthetic radar training examples.
+
+The pipeline reconstructs articulated human motion, generates related motion variants, places them in randomized electromagnetic scenes, and extracts radar features for machine learning. It connects **GVHMR**, **SinMDM**, and **Perceive EM** through explicit coordinate, skeleton, and timing conventions.
+
+In the paper's reported seven-method comparison, **domain-adversarial training achieved 62.23% accuracy on 12,000 real test recordings**, compared with **46.13% for real-only training**. The reported gain is **16.09 percentage points**, calculated from the unrounded experiment values.
+
+![Video-to-virtual-radar workflow, from motion reconstruction to real-radar evaluation](/Portfolio-Website/images/projects/video-to-virtual-radar/workflow.png)
+*Workflow schematic created from the paper. Video reconstruction, motion generation, and electromagnetic simulation run offline; real radar recordings support training and evaluation.*
+
+---
+
+## What I Built
+
+- A **video-to-animation bridge** that retargets reconstructed body motion to a simulator-compatible skeleton
+- A **single-motion diffusion workflow** for generating variations of each source gesture
+- A reproducible **Perceive EM scene generator** with motion, placement, orientation, and requested body-scale variation
+- Processing for **azimuth, elevation, and Doppler spectrograms** from coherent simulated responses
+- A **three-branch CNN** and a comparison runner for seven training strategies
+- Checks for skeleton compatibility, playback timing, data overlap, and physical feature axes
+
+The contribution is the engineering of the complete data-generation and learning chain, rather than a new pose-recovery model or diffusion architecture.
+
+---
+
+## From Video to Articulated Motion
+
+The source video is normalized to **30 frames per second** before GVHMR reconstructs world-grounded body motion. An adapter uses **22 SMPL-X body joints**, converts the reconstruction into the simulator's coordinate frame, and aligns it with a compatible template skeleton.
+
+Retargeting preserves the template's bone lengths and joint hierarchy. The exported **COLLADA animation** retains mesh associations and replaces the motion payload; its **DAEZ** container is a compressed DAE archive.
+
+Preserving physical playback time is essential. A gesture played too quickly may look plausible but produce the wrong radial velocity and Doppler signature. The simulation samples **100 frames at 33 Hz**, spanning **3.0 seconds from the first sample to the last**.
+
+---
+
+## Generating Motion & Scene Diversity
+
+SinMDM learns local temporal structure from a single source animation and generates related motion sequences. The bridge restores fixed nonroot offsets after generation, preserving bone lengths while allowing poses and trajectories to vary.
+
+The configured generator requests **50 motion variants per gesture** and cycles through them with **ten randomized placements per variant**:
+
+| Configuration | Value |
+| --- | --- |
+| Gesture classes | Push, swipe left, swipe right, swipe up, swipe down |
+| Motion variants | 50 per class |
+| Geometric draws | 10 per variant |
+| Configured trials | 500 per class; 2,500 total |
+| Frames per trial | 100 |
+| Horizontal position offsets | ±0.1 m independently along two axes |
+| Yaw variation | ±10° around the nominal orientation |
+| Requested body scale | 0.8–1.2 |
+
+These are **configured generation settings**, conditional on jobs completing. The supplied results do not establish which motion checkpoint or synthetic dataset size produced the reported comparison. Variants from one source also do not replace independent people or motion demonstrations.
+
+The scene generator uses free space in the supplied configuration. A room is optional but disabled, so this experiment does not establish robustness to realistic indoor clutter and multipath.
+
+---
+
+## Electromagnetic Simulation & Radar Features
+
+Perceive EM evaluates the articulated person–radar scene and returns **coherent range–Doppler responses**. The supplied workflow consumes those responses directly; it does not explicitly save or simulate raw ADC signals in the generator.
+
+The real-data acquisition target is an **Infineon BGT60TR13C**, with a **58.5–62.5 GHz band**, **three receivers**, **32 chirps**, and **64 ADC samples per chirp**. Simulation waveform and antenna definitions come from an external device JSON and require independent verification against that target.
+
+The processor produces three complementary views:
+
+- **Doppler:** power combined across retained range bins and receivers to describe radial motion over time.
+- **Azimuth:** diagonally loaded Capon processing to describe horizontal angular structure.
+- **Elevation:** the corresponding vertical angular representation.
+
+The angle branch applies complex differencing across successive response frames, making inter-frame phase consistency important. Coordinate signs, channel ordering, and physical time must agree across reconstruction, simulation, and feature extraction.
+
+---
+
+## Machine Learning Approach
+
+Each feature view enters its own CNN branch. The three branches are concatenated into a shared **128-dimensional embedding**, followed by a five-class prediction head.
+
+![Three-branch classifier with optional domain-adversarial training](/Portfolio-Website/images/projects/video-to-virtual-radar/classifier.png)
+*Architecture schematic. The domain discriminator and gradient-reversal branch are used during DANN training, not runtime inference.*
+
+I compared seven strategies using this common backbone:
+
+1. **Simulation-only:** train on synthetic examples.
+2. **Real-only:** train using real examples as the baseline.
+3. **Transfer:** pretrain on simulation, then fine-tune on real data.
+4. **Mixed:** jointly train on labeled synthetic and real examples.
+5. **CORAL:** add feature-covariance alignment across domains.
+6. **DANN:** use adversarial domain training to encourage features that transfer between simulation and reality.
+7. **Cross-domain contrastive:** bring same-class synthetic and real embeddings together.
+
+All methods except simulation-only use real training labels and real validation. DANN and CORAL are therefore **target-supervised adaptation experiments** here, rather than demonstrations of adaptation without real labels.
+
+---
+
+## Results on Real Radar Recordings
+
+Every method was evaluated on **12,000 real test recordings** in the supplied comparison.
+
+| Training strategy | Accuracy | Macro-F1 |
+| --- | ---: | ---: |
+| Simulation-only | 24.50% | 0.2008 |
+| Transfer | 43.28% | 0.3636 |
+| Real-only | 46.13% | 0.4438 |
+| Mixed | 55.93% | 0.5211 |
+| CORAL | 58.45% | 0.5490 |
+| DANN | **62.23%** | **0.6016** |
+| Cross-domain contrastive | 57.66% | 0.5477 |
+
+![Real-test accuracy for seven training methods](/Portfolio-Website/images/projects/video-to-virtual-radar/results.png)
+*Chart reproduced from the paper's reported values. These are single-run comparisons without reported uncertainty intervals.*
+
+Mixed training improved on real-only training even without an explicit alignment loss. DANN performed best, while simulation-only and sequential transfer remained below the real-only baseline. The result supports combining simulated examples with real supervision in this evaluated setting.
+
+Training effort differed substantially: **DANN used 1,560 optimizer updates versus 224 for real-only**. The comparison therefore measures complete training strategies, not the isolated value of synthetic data under an equal compute budget. The paper also does not isolate the gains from motion diffusion, placement randomization, or individual processing stages.
+
+---
+
+## Key Learnings & Next Steps
+
+- **Representation details affect the physics.** Incorrect timing changes Doppler; incorrect placement changes range; inconsistent coordinate conventions change angular signs.
+- **More synthetic trials do not automatically mean more independent diversity.** Generated motion must be checked for gesture direction, stroke count, and plausible trajectories.
+- **Real supervision helps identify transferable features.** The strongest results came from joint training and domain-aware objectives rather than simulation pretraining alone.
+- **Controlled ablations are the next step.** Match optimizer updates, document real-label budgets, repeat across seeds, and compare source motion, geometric randomization, and generated-motion diversity separately.
+- **Runtime deployment needs additional work.** The current model classifies complete recordings; background rejection, gesture-onset detection, causal normalization, and embedded latency remain to be evaluated.
+
+The digital twin is an **offline, parameterized motion–radar model**, not a continuously synchronized replica of a particular person or room. Its value is making the data-generation process controllable and inspectable before committing to more physical measurements.
+
+---
+
+## Research Context
+
+Based on *From Video to Virtual Radar: A Motion-Driven Digital Twin Workflow for Data-Limited Gesture Recognition*, by Josh Visser, University of Waterloo.
+
+Diagrams were created for this project page from the paper's methods; the results chart uses its reported measurements. The date above is the portfolio entry date, not a publication date.

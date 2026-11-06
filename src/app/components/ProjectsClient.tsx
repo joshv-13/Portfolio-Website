@@ -58,6 +58,9 @@ export default function FeaturedProjectsClient({
 
                 {/* BODY */}
                 <div className="interview-card-body">
+                  {p.frontmatter.tag && (
+                    <span className="interview-card-tag">{p.frontmatter.tag}</span>
+                  )}
                   <h3 className="interview-card-title">
                     {p.frontmatter.title}
                   </h3>

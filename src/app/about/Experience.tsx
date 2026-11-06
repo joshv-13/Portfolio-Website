@@ -112,16 +112,37 @@ const items = useMemo<TimelineItem[]>(
         'Walked away with 3rd Place — which feels very good at an international antenna conference.',
       ],
     },
+
     {
-      date: 'May 2026',
-      title: 'Started My Master’s at Waterloo',
-      org: 'University of Waterloo — Electrical and Computer Engineering',
-      kind: 'milestone',
-      bullets: [
-        'Began my MASc under the supervision of Professor George Shaker, focusing on radar sensing and electromagnetics.',
-        'Excited to build on my biomedical engineering background and explore new ways to combine RF hardware, signal processing, and machine learning.',
-      ],
-    },
+    date: 'May 2025 — May 2026',
+    title: 'A Year to Travel',
+    org: 'Travel & Personal Development',
+    kind: 'milestone',
+    bullets: [
+      'Took a year off to travel —  spent some time exploring beyond the lab.',
+      'Check out the photography section for a few shots of the places I got to visit',
+    ],
+  },
+  {
+    date: 'May 2026',
+    title: 'Started My Master’s at Waterloo',
+    org: 'University of Waterloo — Electrical and Computer Engineering',
+    kind: 'milestone',
+    bullets: [
+      'Began my MASc under the supervision of Professor George Shaker, focusing on radar sensing and electromagnetics.',
+      'Excited to build on my biomedical engineering background and explore new ways to combine RF hardware, signal processing, and machine learning.',
+    ],
+  },
+  {
+    date: 'Sept 2026 — Present',
+    title: 'Teaching Assistant — Probability & Statistics',
+    org: 'University of Waterloo — ECE 203',
+    kind: 'work',
+    bullets: [
+      'Help students make sense of probability and statistics',
+      'Grade assignments and provide feedback on probability models, random variables, and statistical methods.',
+    ],
+  },
   ],
   []
 )

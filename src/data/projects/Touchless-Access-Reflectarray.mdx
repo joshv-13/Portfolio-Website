@@ -1,0 +1,144 @@
+---
+title: "Two-Sided Doorway Gesture Recognition Using a Single Radar"
+tag: "RIS Sensing"
+date: "2026-11-06"
+excerpt: A single 60 GHz radar and passive reflectarray underpin a two-sided doorway gesture interface, combining a direct sensing path with a redirected rear-side interaction region.
+image: "/Portfolio-Website/images/projects/touchless-access-reflectarray/hero.png"
+tech: [mmWave Radar, FMCW, Reflectarrays, Electromagnetics, Signal Processing, Micro-Doppler, Gesture Recognition, KNN]
+---
+
+## Overview
+
+The goal is simple: **recognize hand gestures on either side of a door using one active radar**. A person approaching from outside or leaving from inside could wave or swipe to request an action, without touching a shared button.
+
+In this collaborative University of Waterloo project, we paired a commercial **60 GHz FMCW radar** with a compact **passive printed reflectarray**. The two-sided concept combines the radar's direct sensing path on one side with a redirected path toward an interaction region on the other. The reflectarray supplies the additional propagation path without adding a second active radar.
+
+The paper demonstrates the **rear-side gesture-sensing component** of that architecture: 162 still, wave, and swipe instances classified with **90.7% accuracy**. That result does not yet establish simultaneous gesture recognition on both sides of an installed door. Two-sided classification, side assignment, and integration with a door controller remain system-level validation steps.
+
+![Concept of a single radar and passive reflectarray supporting gesture interaction on opposite sides of a doorway](/Portfolio-Website/images/projects/touchless-access-reflectarray/hero.png)
+*Concept illustration: one shared radar–reflectarray module serves two interaction regions. The illustration shows the intended application, not an experimentally validated installation or simultaneous-user result.*
+
+A future controller could combine gesture requests with an accepted credential and access policy. Gestures indicate a requested action; they do not authenticate a person or grant permission to enter.
+
+---
+
+## What We Built
+
+- A compact **Infineon BGT60TR13C radar–reflectarray assembly** with a custom 3D-printed holder
+- A **112-cell printed aperture** implementing a fixed binary phase map for a nominal **40° steering direction**
+- Rear-side recordings of **still, wave, and swipe** activity at approximately **1.5 m**
+- A lightweight **three-nearest-neighbor classifier**, evaluated in a 162-instance case study
+- Separate comparisons against **radar-only** and **same-size metal-sheet** configurations
+
+![Back and side views of the compact radar and printed reflectarray assembly](/Portfolio-Website/images/projects/touchless-access-reflectarray/prototype.png)
+*The printed surface sits approximately 20 mm from the radar's antenna side. The holder maintains the relative position of the radar and aperture.*
+
+---
+
+## One Radar, Two Doorway Interaction Regions
+
+| Interaction region | Intended sensing path | Role |
+| --- | --- | --- |
+| Direct-view side | Radar → hand → radar | Use the radar’s native view for gesture interaction |
+| Redirected side | Radar → reflectarray → hand → reflectarray → radar | Extend sensing toward a region behind or beside the module |
+
+Both paths use the **same transmitter and receiver hardware**. The surface is a passive coverage-shaping element, not a second sensor. The labels describe two regions of one doorway; entry and exit can be assigned according to the installation.
+
+Placement must provide an unobstructed propagation route to each selected interaction area. The concept does not assume transmission through a closed door or wall, and the fixed surface does not cover every position on either side. A deployed system would also need to identify which side produced a gesture and handle overlapping users.
+
+---
+
+## How the Reflectarray Works
+
+A metal plate redirects energy according to its orientation. An engineered reflectarray adds a spatial phase pattern, allowing the outgoing wavefront to be shaped through the geometry of its individual cells.
+
+Because the radar sits only about **20 mm** from the surface, the illumination is curved rather than a plane wave. The design compensates for the different feed-to-cell distances and assigns each cell one of two printed states. Those states provide approximately **181° of phase separation near 60 GHz**.
+
+The prototype uses a **permanent printed map**: it requires no switching supply and does not electronically scan. Its 112 active cells occupy a **31.44 mm patterned width** on a **40 mm diameter board**.
+
+![Printed phase map, fabricated reflectarray, and finite-distance simulation model](/Portfolio-Website/images/projects/touchless-access-reflectarray/reflectarray-design.png)
+*The binary map and fabricated surface, alongside the waveguide-fed design model. The simulation feed is a design surrogate; the sensing prototype uses the radar's antenna package.*
+
+---
+
+## System Workflow
+
+The sensing concept connects the electromagnetic design to an interpretable motion decision:
+
+1. **Provide two interaction paths:** a direct view on one side and a reflectarray-assisted view toward the other.
+2. **Acquire radar echoes** containing range and motion information.
+3. **Select the interaction range** and examine its Doppler evolution over time; reliable doorway-side assignment is a further integration requirement.
+4. **Classify the activity** as still, wave, or swipe.
+5. **Pass the interaction label to a controller** in a future access-system integration.
+
+This describes the intended two-sided workflow. The reported classification experiment evaluates the redirected rear-side region; complete two-sided operation and door control were not demonstrated.
+
+---
+
+## Signal Processing & Machine Learning
+
+The paper connects the measured gesture signatures to a worked processing pipeline:
+
+- Fast-time mean removal, Hann windowing, and a **range FFT**
+- Motion-based range selection around the interaction region
+- Slow-time mean subtraction for static-clutter suppression
+- Hann windowing and a **Doppler FFT**
+- Noncoherent receiver-power averaging and range-gate power summation
+- Four interpretable features describing **peak motion power, envelope peak count, dominant envelope frequency, and spectral concentration**
+- Feature standardization and **three-nearest-neighbor classification**
+
+These features capture the difference between a quiet interval, recurring hand motion, and a short swipe. The worked pipeline is presented separately from the paper's original classification results; it should not be read as a verified reconstruction of that evaluation. Its recommended evaluation keeps instances from the same acquisition together and fits feature scaling using training data only.
+
+---
+
+## Demonstrated Results: The Redirected Gesture Region
+
+The reported case study contains **162 activity instances** recorded approximately **1.5 m** from the radar–surface module. Horizontal and vertical swipes are pooled into one class, so the task recognizes activity type rather than swipe direction.
+
+| Activity | Instances | Correct predictions | Recall |
+| --- | ---: | ---: | ---: |
+| Still | 33 | 31 | 93.9% |
+| Wave | 34 | 34 | 100.0% |
+| Swipe | 95 | 82 | 86.3% |
+
+Across the three classes, the classifier achieved **90.7% overall accuracy** and **93.4% balanced accuracy**, with **147 of 162 instances classified correctly**.
+
+![Still, wave, and swipe examples with their rear-side Doppler spectrograms](/Portfolio-Website/images/projects/touchless-access-reflectarray/gesture-examples.png)
+*Representative activities and measured Doppler signatures with the fixed reflectarray. The recurring wave and localized swipe have different temporal structures.*
+
+Most errors were missed swipes: ten were classified as still and three as wave. This highlights the importance of gesture orientation and the amount of motion projected along the sensing path.
+
+---
+
+## Reflectarray vs. Metal Sheet vs. Radar Only
+
+Separate recordings compared the three configurations while a participant waved near **1 m**. Each recording lasted approximately **30 seconds**.
+
+| Configuration | Range-peak prominence | Persistent occupancy |
+| --- | ---: | ---: |
+| Radar only | 1.56 dB | 0.0% |
+| Same-size coplanar metal sheet | 3.27 dB | 12.8% |
+| Fixed printed reflectarray | **5.50 dB** | **31.5%** |
+
+Persistent occupancy measures runs of at least five frames with prominence above 3 dB. The engineered aperture produced the strongest range-localized visibility summaries in these recordings.
+
+These are **original Doppler-notch measurements**, which may include stationary leakage. They are not motion-only power measurements or gesture-classification accuracies, and the paper does not report a matched classification comparison across all three configurations.
+
+---
+
+## Key Learnings & Next Steps
+
+- **Antenna design and processing need to be developed together.** The reflected path changes both apparent range and the radial projection of a gesture.
+- **A fixed passive surface can extend useful sensing coverage.** Electronic reconfiguration is a possible extension, rather than a requirement for this prototype.
+- **Simple features can support a small gesture vocabulary.** Power, recurrence, and event structure make the classification approach interpretable.
+- **Validate both sides together.** Measure gesture recognition on each side, correct side assignment, overlapping-user behavior, and the effects of door position.
+- **Access-system validation goes beyond recognition accuracy.** Further work should measure false activations, response latency, performance across users and installations, and integration with a controller.
+- **Selectable surface states could provide additional viewpoints.** Switching would need to be coordinated with coherent radar acquisition.
+
+---
+
+## Research Context
+
+Based on *Reflectarray-Assisted Radar Gesture Sensing for Touchless Access: Principles, Design, and Demonstration*, by Amirbahador Mansoori, Josh Visser, Raafat R. Mansour, and George Shaker, University of Waterloo.
+
+Technical figures are adapted from the supplied manuscript. The hero is an AI-generated illustration of the intended two-sided doorway concept. The date above is the portfolio entry date, not a publication date.

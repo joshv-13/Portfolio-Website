@@ -9,6 +9,8 @@ export type ProjectFrontmatter = {
   excerpt: string
   image?: string
   date?: string
+  /** Optional category displayed on cards and used by the project filter. */
+  tag?: string
   tech?: string[]
   featured?: boolean
 }

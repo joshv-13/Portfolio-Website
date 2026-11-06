@@ -1,0 +1,143 @@
+---
+title: "Radar–Camera Digital Twin for Controlled Sensing Experiments"
+tag: "Radar Digital Twins"
+date: "2026-11-06"
+excerpt: A shared 3D scene drives electromagnetic radar simulation and synthetic RGB rendering, enabling traceable sensor-viewpoint experiments with identical human motion.
+image: "/Portfolio-Website/images/projects/radar-camera-digital-twin/hero.png"
+tech: [Digital Twins, Perceive EM, Radar Simulation, Synthetic RGB, PyVista, Multimodal Sensing, Sensor Placement, Python, Dataset Validation]
+---
+
+## Overview
+
+Moving a sensor changes what it can observe. Measuring that effect in the real world is difficult when a person cannot repeat exactly the same movement for every setup.
+
+In this collaborative University of Waterloo project, we built a **radar–camera virtual testbed** that holds a recorded human motion fixed while changing the sensor viewpoint. A shared 3D scene supplies articulated motion to **Ansys Perceive EM** for electromagnetic radar simulation and to an independent **PyVista RGB renderer**.
+
+The result is a traceable set of simulated observations linked to the same scene state, sensor configuration, and acquisition time. The testbed provides a foundation for planning physical sensing experiments; it does not yet select an optimal sensor placement or establish agreement with real measurements.
+
+![Shared-scene radar–camera simulation workflow](/Portfolio-Website/images/projects/radar-camera-digital-twin/workflow.png)
+*Workflow schematic created from the paper. The RF diagnostic is an inspection output of the radar solver, not an additional physical sensor.*
+
+---
+
+## What We Built
+
+- A **shared scene and motion record** for repeatable virtual sensing experiments
+- Electromagnetic simulation producing **complex range–Doppler responses**
+- Independent **synthetic RGB replay** from saved body poses, without rerunning the radar solver
+- A native **first-bounce RF ray diagnostic** for inspecting modeled interactions
+- A portable radar–RGB dataset with motion, axes, configuration, and timing metadata
+- An independent validator that passed **107 integrity checks after dataset relocation**
+- A controlled **15° sensor-viewpoint experiment** using the same prescribed motion
+
+---
+
+## One Scene, Three Observation Outputs
+
+The baseline scene contains a standing human performing a right-arm wave in an otherwise empty environment. The motion is represented by **49 saved poses**, sampled every **50 ms**, from **0 to 2.40 seconds**.
+
+The radar and RGB camera share a nominal virtual viewpoint **0.850 m from a fixed torso reference**. The scene produces three distinct outputs:
+
+| Output | What it represents |
+| --- | --- |
+| Complex radar response | Simulated reflection structure across range and radial velocity |
+| Synthetic RGB frame | A perspective rendering of the saved articulated mesh |
+| RF ray diagnostic | A fisheye view of modeled first-bounce ray interactions |
+
+![Saved 3D state, synthetic RGB, native RF diagnostic, and processed range–Doppler response for frame 026](/Portfolio-Website/images/projects/radar-camera-digital-twin/linked-observations.png)
+*Actual figure from the supplied paper, showing frame 026 at 1.300 s. RGB and RF views use different projections; the range–Doppler plot is a measurement-domain representation rather than an image of the person.*
+
+The human model uses rigid mesh sections and a simplified electromagnetic material. Visible gaps between body sections are part of the source model, so these images should be interpreted as simulation outputs rather than photorealistic or physically calibrated observations.
+
+---
+
+## Radar Configuration
+
+| Parameter | Configuration |
+| --- | --- |
+| Center frequency | 61.5 GHz |
+| Sweep bandwidth | 2.0 GHz, spanning 60.5–62.5 GHz |
+| Samples per chirp | 256 |
+| Chirps per CPI | 64 |
+| Chirp spacing | 250 µs |
+| Coherent processing interval | 16 ms |
+| Frame interval | 50 ms |
+| Transmit / receive channels | 1 / 1, parametric |
+| Saved processed response | 1 × 1 × 128 × 256: TX × RX × Doppler × range |
+| RGB image | 960 × 540 pixels |
+| RF diagnostic image | 512 × 512 pixels |
+
+The saved radar arrays are **processed complex responses**, not raw ADC samples. The 128-bin Doppler axis does not mean that 128 chirps were acquired; the configured acquisition uses 64 chirps per CPI.
+
+---
+
+## Making Time Explicit
+
+Each RGB image uses the body pose at the **start** of the corresponding radar interval. Radar integrates motion over the following **16 ms**, so its CPI midpoint falls **8 ms after the RGB pose time**.
+
+For frame 026, the RGB pose is at **1.300 s**, the radar interval runs from **1.300 to 1.316 s**, and the midpoint is **1.308 s**.
+
+![Timing relationship between RGB pose, radar acquisition interval, and the next frame](/Portfolio-Website/images/projects/radar-camera-digital-twin/timing.png)
+*Timing schematic using the paper's frame-026 example. These are known simulation times, not measurements of physical radar–camera synchronization.*
+
+This distinction matters when comparing a snapshot of an articulated body with a radar response that includes motion over an interval.
+
+---
+
+## Controlled Viewpoint Experiment
+
+We moved the complete radar–RGB assembly **15° around the same torso reference**, preserving the **0.850 m reference distance** and recorded human motion. The assembly translated approximately **0.222 m** and changed its pointing direction. This was a viewpoint change, not an in-place antenna rotation.
+
+![Baseline and 15-degree sensor viewpoints with recorded body keypoints](/Portfolio-Website/images/projects/radar-camera-digital-twin/viewpoint-geometry.png)
+*Source-derived geometry from the paper. Both viewpoints face the fixed torso anchor; the prescribed motion is unchanged.*
+
+The baseline produced **49 radar responses, 49 RGB frames, and 49 RF diagnostics**. The alternative viewpoint produced a second **49-frame radar–RGB sequence**.
+
+The saved experiment reports a **54.2% relative difference in whole-sequence radar magnitude** and a **magnitude correlation of 0.8402**. These values indicate that the simulated response changed. They remain provisional because the supplied source lacks the alternative-view complex arrays and the exact comparison formula, preventing independent recomputation. They do not show that either viewpoint is better for a sensing task.
+
+---
+
+## Dataset Traceability & Validation
+
+The portable radar–RGB archive contains complex arrays, RGB images, saved axes, motion records, timestamps, and configuration information.
+
+- All **49 radar files and their axes** matched the original outputs.
+- All **2,646 motion records** matched their source.
+- Five replayed body points agreed with the saved positions to numerical precision.
+- After relocation and extraction, the dataset passed **107 integrity checks without Perceive EM**.
+
+These checks establish that the recorded observations can be transferred and inspected consistently. They do not measure electromagnetic accuracy or simulator run-to-run repeatability.
+
+---
+
+## Recorded Processing Cost
+
+| Workload | Recorded time |
+| --- | ---: |
+| Replay saved radar data with new RGB images, 49 pairs | 10.960 s |
+| Generate new-view radar–RGB pairs and comparison, 49 frames | 36.592 s |
+| First electromagnetic calculation | 15.250 s |
+| Subsequent radar calculations, mean per frame | 21.1 ms |
+| RGB rendering, mean per frame | 168.1 ms |
+
+The first radar calculation dominates the reported per-frame difference, suggesting initialization or caching effects that were not separately measured. The two total workloads differ, so their times are not a speedup comparison or a demonstration of real-time operation.
+
+---
+
+## Key Learnings & Next Steps
+
+- **Shared motion makes viewpoint comparisons easier to interpret.** The human action stays fixed while the sensor configuration changes.
+- **Observation types need clear definitions.** Optical views, RF ray diagnostics, and range–Doppler maps describe different aspects of the same scene.
+- **Traceability is valuable independently of model fidelity.** Saved state, timestamps, and configuration make a virtual experiment inspectable and portable.
+- **A changed response is not automatically a better response.** Placement studies need a task-specific measure of motion visibility or sensing performance.
+- **Physical validation is the next milestone.** Recover the alternative-view arrays, repeat the unchanged baseline, refine the human/material/antenna models, and compare against matching real radar measurements.
+
+The arm wave is a controlled test movement, not a gesture-classification experiment. The project's contribution is a documented virtual testbed for early-stage sensing studies.
+
+---
+
+## Research Context
+
+Based on *A Radar–Camera Digital-Twin Testbed for Controlled Sensing Experiments*, by Sebastian Ratto Valderrama, Josh Visser, Arien Sligar, and George Shaker, University of Waterloo.
+
+Observation and geometry figures come from the supplied manuscript. Workflow and timing diagrams were created for this project page from its stated configuration. The date above is the portfolio entry date, not a publication date.
